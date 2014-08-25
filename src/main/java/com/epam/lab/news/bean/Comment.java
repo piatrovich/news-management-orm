@@ -1,13 +1,16 @@
 package com.epam.lab.news.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "COMMENT")
+@Table(name = "COMMENTS")
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @SequenceGenerator(name = "sequence", sequenceName = "COMMENTS_SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
     @Column(name = "comment_id")
     private Long id;
 
@@ -17,8 +20,9 @@ public class Comment {
     @Column(name = "creation_date")
     private Date creationDate;
 
-    @ManyToOne
-    @JoinColumn(name = "news")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NEWS_news_id")
+    @JsonIgnore
     private News news;
 
     public Long getId() {
@@ -44,6 +48,14 @@ public class Comment {
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
+
+    /*public Long getNews() {
+        return news;
+    }
+
+    public void setNews(Long news) {
+        this.news = news;
+    }*/
 
     public News getNews() {
         return news;

@@ -40,3 +40,12 @@ body {
     text-align: center;
     margin: auto;
 }
+
+span.glyphicon-circle-arrow-right, span.glyphicon-circle-arrow-left {
+    font-size: 1.7em;
+}
+
+span.badge {
+    vertical-align: 22%;
+    font-size: 1.5em;
+}

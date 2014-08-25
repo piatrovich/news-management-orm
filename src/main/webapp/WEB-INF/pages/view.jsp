@@ -66,6 +66,9 @@
                     <div class="col-md-12">
                         <p id="article-text"></p>
                     </div>
+                    <div id="tags-block" class="col-md-12 text-right">
+                        <span id="tags-span" class="text-danger" hidden="hidden"></span>
+                    </div>
                 </div>
         </div>
         <!-- end Content -->

@@ -6,7 +6,7 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <!-- Needs for @Service, @Repository and etc.  -->
-    <context:annotation-config/>
+    <!-- Needs for @Service, @Repository and etc.
+    <context:annotation-config/>  -->
 
 </beans>
