@@ -49,3 +49,7 @@ span.badge {
     vertical-align: 22%;
     font-size: 1.5em;
 }
+
+#add-comment-btn {
+    margin-top: 10px;
+}

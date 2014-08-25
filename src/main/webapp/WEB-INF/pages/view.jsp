@@ -69,6 +69,14 @@
                     <div id="tags-block" class="col-md-12 text-right">
                         <span id="tags-span" class="text-danger" hidden="hidden"></span>
                     </div>
+                    <div class="col-md-12">
+                        <div>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <button id="add-comment-btn" class="btn btn-default" type="button">Add comment</button>
+                    </div>
                 </div>
         </div>
         <!-- end Content -->
