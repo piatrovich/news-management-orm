@@ -1,12 +1,13 @@
 package com.epam.lab.news.data.service;
 
+import com.epam.lab.news.bean.Comment;
+import com.epam.lab.news.bean.News;
 import com.epam.lab.news.data.repo.ICommentRepository;
-import com.epam.lab.news.data.repo.PagingAndSortingRepository;
-import com.epam.lab.news.data.repo.impl.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,6 +36,13 @@ public class CommentService {
         } else {
             return 0L;
         }
+    }
+
+    public void saveComment(Comment comment, Long newsId){
+        News news = new News();
+        news.setId(newsId);
+        comment.setNews(news);
+        repository.save(comment);
     }
 
 }
