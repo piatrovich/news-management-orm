@@ -75,7 +75,9 @@
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button id="add-comment-btn" class="btn btn-default" type="button">Add comment</button>
+                        <button id="add-comment-btn" class="btn btn-default" type="button">
+                            <spring:message code="btn.add.comment"/>
+                        </button>
                     </div>
                 </div>
         </div>
