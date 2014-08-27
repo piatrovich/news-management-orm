@@ -81,7 +81,7 @@
                     </button>
                 </div>
                 <div id="comments-block">
-                    <div id="comment" class="col-md-12">
+                    <div id="comment" class="col-md-12 single-comment">
                         <div class="col-md-6">
                             <span class="creation-date"></span>
                             <span class="divider"> | </span>

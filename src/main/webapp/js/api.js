@@ -144,6 +144,26 @@ $(document).ready(function(){
     });
 });
 
+$(document).ready(function(){
+
+    $.ajax({
+        type:"GET",
+        url: "http://localhost:8080/news-management-orm/api/comment/byNews/" + getIDFromCurrentPageUrl(),
+        success: function(data){
+            alert(JSON.stringify(data));
+            $.each(data, function(key, value){
+                var block = $(document).find("#comment").clone();
+                $(block).find(".creation-date").text(new Date(value["creationDate"]).toLocaleDateString());
+                $(block).find(".comment-text").text(value["text"]);
+                //$(block).find(".author").text(value[""])
+                $(block).attr("id", $(block).attr("id") + value["id"]);
+                $(document).find("#comments-block").append(block);
+            });
+        },
+        dataType: "json"
+    });
+});
+
 function addComment(comment){
     $.ajax({
         type: "POST",
