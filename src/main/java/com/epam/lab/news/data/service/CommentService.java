@@ -42,6 +42,7 @@ public class CommentService {
         News news = new News();
         news.setId(newsId);
         comment.setNews(news);
+        comment.setCreationDate(new Date());
         repository.save(comment);
     }
 

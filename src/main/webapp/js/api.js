@@ -135,6 +135,24 @@ function loadNewsForView() {
     });
 }
 
+$(document).ready(function(){
+    $(document).find("#add-comment-btn").click(function(){
+        var comment = new Object();
+        comment.text = $(document).find("#comment-message").val();
+        addComment(comment);
+        $(document).find("#comment-message").val('');
+    });
+});
+
+function addComment(comment){
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/news-management-orm/api/comment/" + getIDFromCurrentPageUrl(),
+        contentType : 'application/json; charset=utf-8',
+        data: JSON.stringify(comment)
+    });
+}
+
 /**
  * Loads single news from API and fills page.
  */

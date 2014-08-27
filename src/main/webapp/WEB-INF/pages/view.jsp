@@ -71,7 +71,7 @@
                     </div>
                     <div class="col-md-12">
                         <div>
-                            <textarea class="form-control" rows="3"></textarea>
+                            <textarea id="comment-message" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
                     <div class="col-md-12">
