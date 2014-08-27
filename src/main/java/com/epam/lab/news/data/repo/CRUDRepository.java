@@ -4,16 +4,16 @@ import java.util.List;
 
 public interface CRUDRepository<E> {
 
-    public List<E> all();
+    List<E> all();
 
-    public E one(Long id);
+    E one(Long id);
 
-    public void save(E entity);
+    void save(E entity);
 
-    public Long count();
+    Long count();
 
-    public void delete(E entity);
+    void delete(E entity);
 
-    public boolean exists(Long id);
+    boolean exists(Long id);
 
 }
