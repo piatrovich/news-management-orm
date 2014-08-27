@@ -145,12 +145,10 @@ $(document).ready(function(){
 });
 
 $(document).ready(function(){
-
     $.ajax({
         type:"GET",
         url: "http://localhost:8080/news-management-orm/api/comment/byNews/" + getIDFromCurrentPageUrl(),
         success: function(data){
-            alert(JSON.stringify(data));
             $.each(data, function(key, value){
                 var block = $(document).find("#comment").clone();
                 $(block).find(".creation-date").text(new Date(value["creationDate"]).toLocaleDateString());
@@ -331,3 +329,27 @@ function warningsBehavior(data){
         }
     });
 }
+
+$(document).ready(function(){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/news/count",
+        success: function (data){
+            $(document).find("#news-count").text(data);
+        }
+    });
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/tags/count",
+        success: function (data){
+            $(document).find("#tags-count").text(data);
+        }
+    });
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/comment/count",
+        success: function (data){
+            $(document).find("#comments-count").text(data);
+        }
+    });
+});

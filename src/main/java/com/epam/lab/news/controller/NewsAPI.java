@@ -35,6 +35,12 @@ public class NewsAPI {
         //service.save(news);
     }
 
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public Long newsCount(){
+        return service.getTotalNewsCount();
+    }
+
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public News single(@PathVariable Long id){
         return service.getSingle(id);

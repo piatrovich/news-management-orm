@@ -26,6 +26,10 @@ public class NewsService {
         return repository.one(id);
     }
 
+    public Long getTotalNewsCount(){
+        return repository.count();
+    }
+
     public ResponsePage<News> getPage(Page page){
         page.setTotal(repository.pageCount(page.getSize()));
         List<News> newses = null;
