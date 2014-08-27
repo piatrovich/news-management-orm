@@ -52,34 +52,49 @@
 
         <!-- Content -->
         <div class="col-md-9">
-                <div id="article-block" class="row articles">
-                    <div class="col-md-9">
-                        <h3 id="article-title"></h3>
-                    </div>
-                    <div class="col-md-3 date">
-                        <p id="article-date"></p>
-                    </div>
-                    <div class="col-md-12">
-                        <p id="article-description"></p>
-                    </div>
-                    <br />
-                    <div class="col-md-12">
-                        <p id="article-text"></p>
-                    </div>
-                    <div id="tags-block" class="col-md-12 text-right">
-                        <span id="tags-span" class="text-danger" hidden="hidden"></span>
-                    </div>
-                    <div class="col-md-12">
-                        <div>
-                            <textarea id="comment-message" class="form-control" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <button id="add-comment-btn" class="btn btn-default" type="button">
-                            <spring:message code="btn.add.comment"/>
-                        </button>
+            <div id="article-block" class="row articles">
+                <div class="col-md-9">
+                    <h3 id="article-title"></h3>
+                </div>
+                <div class="col-md-3 date">
+                    <p id="article-date"></p>
+                </div>
+                <div class="col-md-12">
+                    <p id="article-description"></p>
+                </div>
+                <br/>
+
+                <div class="col-md-12">
+                    <p id="article-text"></p>
+                </div>
+                <div id="tags-block" class="col-md-12 text-right">
+                    <span id="tags-span" class="text-danger" hidden="hidden"></span>
+                </div>
+                <div class="col-md-12">
+                    <div>
+                        <textarea id="comment-message" class="form-control" rows="3"></textarea>
                     </div>
                 </div>
+                <div class="col-md-12">
+                    <button id="add-comment-btn" class="btn btn-default" type="button">
+                        <spring:message code="btn.add.comment"/>
+                    </button>
+                </div>
+                <div id="comments-block">
+                    <div id="comment" class="col-md-12">
+                        <div class="col-md-6">
+                            <span class="creation-date"></span>
+                            <span class="divider"> | </span>
+                            <span class="">
+                                <em class="author"></em>
+                            </span>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="comment-text"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <!-- end Content -->
     </div>
@@ -87,7 +102,6 @@
     <c:import url="confirmation/deletion.jsp"/>
 </div>
 <script src="<spring:url value="/js/jquery-2.1.1.js"/>"></script>
-<script src="<spring:url value="/js/scripts.js"/>"></script>
 <script src="<spring:url value="/js/api.js"/>"></script>
 <script type="text/javascript">
     window.onload = loadNewsForView();

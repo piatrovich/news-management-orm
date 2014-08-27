@@ -51,5 +51,17 @@ span.badge {
 }
 
 #add-comment-btn {
+    margin: 10px 0 10px 0;
+}
+
+#comments-block {
     margin-top: 10px;
+}
+
+.comment-text {
+    padding-left: 5px;
+}
+
+#comment {
+    display: none;
 }
