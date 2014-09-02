@@ -52,7 +52,7 @@ public class CommentRepository implements ICommentRepository {
     }
 
     @Override
-    public void save(Comment entity) {
+    public Comment save(Comment entity) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
@@ -65,6 +65,7 @@ public class CommentRepository implements ICommentRepository {
         } finally {
             session.close();
         }
+        return entity;
     }
 
     @Override
@@ -89,17 +90,22 @@ public class CommentRepository implements ICommentRepository {
     }
 
     @Override
-    public List<Comment> firstPage(Long size) {
-        return null;
+    public List<Comment> page(Page page, Long...params) {
+        Session session = sessionFactory.openSession();
+        List<Comment> comments = session.createCriteria(Comment.class)
+                .setFirstResult((int)((page.getCurrent() - 1) * page.getSize()))
+                .setMaxResults(page.getSize().intValue()).list();
+        session.close();
+        return comments;
     }
 
     @Override
-    public List<Comment> page(Page page) {
-        return null;
-    }
-
-    @Override
-    public Long pageCount(Long pageSize) {
-        return null;
+    public Long pageCount(Long pageSize, Long...params) {
+        Long count = 0L;
+        if (pageSize != 0L) {
+            count = params.length != 0 ? getCountByNewsId(params[0]) : count();
+            count = count % pageSize > 0 ? count / pageSize + 1: count / pageSize;
+        }
+        return count;
     }
 }

@@ -38,12 +38,12 @@ public class NewsRepository implements PagingAndSortingRepository<News> {
     }
 
     @Override
-    public void save(News news) {
+    public News save(News news) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.save(news);
+            session.saveOrUpdate(news);
             transaction.commit();
         } catch (Exception e){
             if (transaction != null)
@@ -51,6 +51,7 @@ public class NewsRepository implements PagingAndSortingRepository<News> {
         } finally {
             session.close();
         }
+        return news;
     }
 
     @Override
@@ -86,26 +87,27 @@ public class NewsRepository implements PagingAndSortingRepository<News> {
         return news != null;
     }
 
-    @Override
+    /*@Override
     public List<News> firstPage(Long size) {
         Session session = sessionFactory.openSession();
         List<News> newses = session.createCriteria(News.class).setMaxResults(size.intValue()).list();
         session.close();
         return newses;
-    }
+    }*/
 
     @Override
-    public List<News> page(Page page) {
+    public List<News> page(Page page, Long...params) {
         Session session = sessionFactory.openSession();
-        List<News> newses = session.createCriteria(News.class)
-                .setFirstResult((int)((page.getCurrent() - 1) * page.getSize()))
-                .setMaxResults(page.getSize().intValue()).list();
+        List<News> newses = (List<News>)session.createCriteria(News.class)
+                //.setFirstResult((int)((page.getCurrent() - 1) * page.getSize()))
+                //.setMaxResults(page.getSize().intValue())
+                .list();
         session.close();
         return newses;
     }
 
     @Override
-    public Long pageCount(Long pageSize) {
+    public Long pageCount(Long pageSize, Long...params) {
         if (pageSize > 0L){
             Long count = count();
             if (count % pageSize > 0){

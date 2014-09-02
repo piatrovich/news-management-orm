@@ -3,6 +3,8 @@ package com.epam.lab.news.data.repo.impl;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.repo.PagingAndSortingRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -38,12 +40,12 @@ public class TagRepository implements PagingAndSortingRepository<Tag> {
     }
 
     @Override
-    public void save(Tag tag) {
+    public Tag save(Tag tag) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.delete(tag);
+            session.save(tag);
             transaction.commit();
         } catch (Exception e){
             if (transaction != null)
@@ -51,6 +53,7 @@ public class TagRepository implements PagingAndSortingRepository<Tag> {
         } finally {
             session.close();
         }
+        return tag;
     }
 
     @Override
@@ -86,16 +89,16 @@ public class TagRepository implements PagingAndSortingRepository<Tag> {
         return tag != null;
     }
 
-    @Override
+    /*@Override
     public List<Tag> firstPage(Long size) {
         Session session = sessionFactory.openSession();
         List<Tag> tags = session.createCriteria(Tag.class).setMaxResults(size.intValue()).list();
         session.close();
         return tags;
-    }
+    }*/
 
     @Override
-    public Long pageCount(Long pageSize) {
+    public Long pageCount(Long pageSize, Long...params) {
         if (pageSize > 0L){
             Long count = count();
             if (count % pageSize > 0){
@@ -109,7 +112,7 @@ public class TagRepository implements PagingAndSortingRepository<Tag> {
     }
 
     @Override
-    public List<Tag> page(Page page) {
+    public List<Tag> page(Page page, Long...params) {
         Session session = sessionFactory.openSession();
         List<Tag> tags = session.createCriteria(Tag.class)
                 .setFirstResult((int)((page.getCurrent() - 1) * page.getSize()))
