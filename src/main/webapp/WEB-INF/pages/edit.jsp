@@ -65,7 +65,7 @@
                                         <input class="newItem" type="text" value="new">
                                     </div>
                                     <div class="col-md-4">
-                                        <button>Add</button>
+                                        <button id="add-tag-btn">Add</button>
                                     </div>
                                 </div>
                             </div>

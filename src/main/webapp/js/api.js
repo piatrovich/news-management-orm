@@ -449,6 +449,11 @@ $(document).ready(function(){
 
 function initMenuTags(){
     $(document).ready(function(){
+        $(document).find("#add-tag-btn").click(function(){
+            alert("add new tag");
+        });
+    });
+    $(document).ready(function(){
         loadMenuTagPage(1);
 
         //$(document).find("#");
