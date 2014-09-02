@@ -104,7 +104,7 @@
             </div>
 
             <div class="list-group">
-                <a href="" class="list-group-item">View comments</a>
+                <a id="show-comments" href="" class="list-group-item">View comments</a>
             </div>
 
         </div>
@@ -176,6 +176,29 @@
                                onclick="window.location.href='${pageContext.request.contextPath}'"
                                value="<spring:message code="page.body.button.cancel"/>">
                     </div>
+                    <div id="comments-block">
+                        <div id="comment" class="col-md-12 single-comment">
+                            <div class="col-md-6">
+                                <span class="creation-date"></span>
+                                <span class="divider"> | </span>
+                            <span class="">
+                                <em class="author"></em>
+                            </span>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="comment-text"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="comment-pagination" class="col-md-12 text-center">
+                        <a id="previous-comment-page" href="">
+                            <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                        </a>
+                        <span id="current-comment-page-badge" class="badge">1</span>
+                        <a id="next-comment-page" href="">
+                            <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                        </a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -190,6 +213,7 @@
 <script type="text/javascript">
     window.onload = loadNewsForEdit();
     window.onload = initMenuTags();
+    window.onload = initShowComments();
 </script>
 </body>
 </html>

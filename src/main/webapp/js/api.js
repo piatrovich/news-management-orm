@@ -518,3 +518,25 @@ function addTagToNews(tag){
         loadNewsForEdit();
     });
 }
+
+function initShowComments(){
+    $(document).find("#comments-block").hide();
+    $(document).find("#comment-pagination").hide();
+    loadCommentPage(1);
+    initShowCommentsEventHandler();
+}
+
+function initShowCommentsEventHandler() {
+    $(document).ready(function(){
+        $(document).find("#show-comments").click(function(event){
+            event.preventDefault();
+            if($("#comment-pagination").is(':visible')){
+                $(document).find("#comments-block").hide();
+                $(document).find("#comment-pagination").hide();
+            } else {
+                $(document).find("#comments-block").show();
+                $(document).find("#comment-pagination").show();
+            }
+        });
+    });
+}
