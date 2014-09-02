@@ -331,12 +331,12 @@ function addIdToHref(article, items, id) {
 }
 
 function deleteArticle(event, element){
-    var id = element.href.substring(45, element.href.length);
+    var id = element.href.substring(49, element.href.length);
     event.preventDefault();
     if(confirm($(document).find("#deleteDialog").text())){
         $.ajax({
             type: "DELETE",
-            url: "http://localhost:8080/news-management-orm/api/delete/" + id
+            url: "http://localhost:8080/news-management-orm/api/news/" + id
         }).done(function(){
             window.location.replace("http://localhost:8080/news-management-orm");
         });

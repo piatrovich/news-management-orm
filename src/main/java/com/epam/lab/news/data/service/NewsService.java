@@ -50,4 +50,11 @@ public class NewsService {
         repository.save(news);
     }
 
+    public void deleteNews(Long id){
+        News news = repository.one(id);
+        if (news != null) {
+            repository.delete(news);
+        }
+    }
+
 }

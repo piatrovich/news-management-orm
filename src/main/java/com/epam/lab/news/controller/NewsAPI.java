@@ -66,4 +66,9 @@ public class NewsAPI {
 
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteNews(@PathVariable Long id){
+        service.deleteNews(id);
+    }
+
 }
