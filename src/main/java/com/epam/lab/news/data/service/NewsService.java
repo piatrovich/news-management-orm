@@ -47,12 +47,6 @@ public class NewsService {
         if (news != null) {
             news.getTags().add(tag);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(news));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
         repository.save(news);
     }
 

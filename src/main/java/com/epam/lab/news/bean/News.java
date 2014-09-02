@@ -36,7 +36,7 @@ public class News {
     @JsonIgnore
     private List<Comment> comments;
 
-    @ManyToMany(/*cascade = {CascadeType.REFRESH},*/ fetch = FetchType.EAGER)
+    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
     @JoinTable(name = "NEWS_TAG",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "TAG")})

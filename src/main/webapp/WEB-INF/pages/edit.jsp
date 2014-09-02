@@ -62,7 +62,7 @@
                             <div class="list-group-item new-item-form">
                                 <div id="new-author">
                                     <div class="col-md-8 item-input">
-                                        <input class="newItem" type="text" placeholder="new tag">
+                                        <input class="newItem" placeholder="new tag">
                                     </div>
                                     <div class="col-md-4">
                                         <button id="add-tag-btn">Add</button>

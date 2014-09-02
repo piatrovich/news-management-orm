@@ -4,6 +4,8 @@ import com.epam.lab.news.bean.News;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.repo.CRUDRepository;
 import com.epam.lab.news.data.repo.PagingAndSortingRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -50,6 +52,12 @@ public class NewsRepository implements PagingAndSortingRepository<News> {
                 transaction.rollback();
         } finally {
             session.close();
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(news));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
         return news;
     }

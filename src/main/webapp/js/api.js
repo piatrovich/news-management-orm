@@ -450,7 +450,12 @@ $(document).ready(function(){
 function initMenuTags(){
     $(document).ready(function(){
         $(document).find("#add-tag-btn").click(function(){
-            alert("add new tag");
+            var newTag = $(document).find(".newItem").val();
+            if (newTag.length > 0) {
+
+            } else {
+                alert("Please, enter name of tag.")
+            }
         });
     });
     $(document).ready(function(){

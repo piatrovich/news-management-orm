@@ -59,12 +59,6 @@ public class NewsAPI {
     @RequestMapping(value = "/{id}/tag", method = RequestMethod.POST)
     public void addTag(@PathVariable Long id, @RequestBody Tag tag){
         service.addTag(id, tag);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tag));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
     }
 
     @RequestMapping(value = "/{id}/author", method = RequestMethod.POST)

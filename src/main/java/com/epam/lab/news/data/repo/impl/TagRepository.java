@@ -45,7 +45,7 @@ public class TagRepository implements PagingAndSortingRepository<Tag> {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            session.save(tag);
+            session.saveOrUpdate(tag);
             transaction.commit();
         } catch (Exception e){
             if (transaction != null)

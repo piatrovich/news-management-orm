@@ -63,7 +63,7 @@ public class Tag /*implements Serializable*/ {
 
     @Override
     public int hashCode() {
-        return (int)(id + ((name == null) ? 0: name.hashCode()));
+        return (int)((id == null ? 0 : id) + (name == null ? 0: name.hashCode()));
     }
 
     @Override
