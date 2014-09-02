@@ -25,8 +25,9 @@ public class TagService {
         return (Tag) repository.one(id);
     }
 
-    public void save(Tag tag){
+    public Tag save(Tag tag){
         repository.save(tag);
+        return tag;
     }
 
     public void delete(Long id){
@@ -39,9 +40,7 @@ public class TagService {
     public ResponsePage<Tag> getPage(Page page){
         page.setTotal(repository.pageCount(page.getSize()));
         List<Tag> items = null;
-        if (page.getCurrent() == 1) {
-            items = repository.firstPage(page.getSize());
-        } else if (page.getCurrent() > 1 && page.getCurrent() <= page.getTotal()){
+        if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
             items = repository.page(page);
         }
         return new ResponsePage<Tag>(items, page);

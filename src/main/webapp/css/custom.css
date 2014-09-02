@@ -70,3 +70,19 @@ span.badge {
 #comment {
     display: none;
 }
+
+#pagination-items {
+    padding-bottom: 2.2em;
+}
+
+.newItem {
+    width: 100px;
+}
+
+.new-item-form {
+    padding-bottom: 2.2em;
+}
+
+.item-input {
+    padding-left: 0;
+}

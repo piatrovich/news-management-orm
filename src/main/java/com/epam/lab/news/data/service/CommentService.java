@@ -2,6 +2,8 @@ package com.epam.lab.news.data.service;
 
 import com.epam.lab.news.bean.Comment;
 import com.epam.lab.news.bean.News;
+import com.epam.lab.news.data.bean.Page;
+import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.repo.ICommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -44,6 +46,15 @@ public class CommentService {
         comment.setNews(news);
         comment.setCreationDate(new Date());
         repository.save(comment);
+    }
+
+    public ResponsePage<Comment> getPage(Page page, Long...args){
+        page.setTotal(repository.pageCount(page.getSize()));
+        List<Comment> items = null;
+        if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
+            items = repository.page(page, args);
+        }
+        return new ResponsePage<Comment>(items, page);
     }
 
 }

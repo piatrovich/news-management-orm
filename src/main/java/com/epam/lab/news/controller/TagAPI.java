@@ -30,9 +30,9 @@ public class TagAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void save(@RequestBody Tag tag){
-        System.out.println(tag.toString());
+    public Tag save(@RequestBody Tag tag){
         repository.save(tag);
+        return tag;
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

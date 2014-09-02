@@ -36,11 +36,11 @@ public class News {
     @JsonIgnore
     private List<Comment> comments;
 
-    @ManyToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER)
+    @ManyToMany(/*cascade = {CascadeType.REFRESH},*/ fetch = FetchType.EAGER)
     @JoinTable(name = "NEWS_TAG",
-            joinColumns = {@JoinColumn(name = "NEWS_ID")},
-            inverseJoinColumns = {@JoinColumn(name = "TAG_ID")})
-    private Set<Tag> tags = new HashSet<Tag>();
+            joinColumns = {@JoinColumn(name = "NEWS")},
+            inverseJoinColumns = {@JoinColumn(name = "TAG")})
+    private Set<Tag> tags;
 
     public Long getId() {
         return id;

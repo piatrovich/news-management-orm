@@ -1,10 +1,9 @@
 package com.epam.lab.news.controller;
 
 import com.epam.lab.news.bean.Comment;
+import com.epam.lab.news.data.bean.Page;
+import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.service.CommentService;
-import com.epam.lab.news.data.service.NewsService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,6 +36,13 @@ public class CommentAPI {
     public Long showPageCount(@RequestParam(value = "size") Long size,
                               @RequestParam(value = "newsId") Long newsId){
         return service.getPageCountByNewsId(size, newsId);
+    }
+
+    @RequestMapping(value = "/page", method = RequestMethod.GET)
+    public ResponsePage<Comment> showPage(@RequestParam(value = "size") Long size,
+                                          @RequestParam(value = "page") Long page,
+                                          @RequestParam(value = "newsId") Long newsId){
+        return service.getPage(new Page(page, size), newsId);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)

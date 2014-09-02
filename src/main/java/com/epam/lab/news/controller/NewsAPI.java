@@ -1,10 +1,14 @@
 package com.epam.lab.news.controller;
 
+import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.bean.News;
+import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.repo.CRUDRepository;
 import com.epam.lab.news.data.service.NewsService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import oracle.jdbc.pool.OracleDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,6 +54,22 @@ public class NewsAPI {
     public ResponsePage<News> getPage(@RequestParam(value = "page") Long page,
                                      @RequestParam(value = "size") Long size){
         return service.getPage(new Page(page, size));
+    }
+
+    @RequestMapping(value = "/{id}/tag", method = RequestMethod.POST)
+    public void addTag(@PathVariable Long id, @RequestBody Tag tag){
+        service.addTag(id, tag);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tag));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping(value = "/{id}/author", method = RequestMethod.POST)
+    public void addAuthor(@PathVariable Long id, @RequestBody Author author){
+
     }
 
 }

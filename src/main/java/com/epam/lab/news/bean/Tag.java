@@ -5,16 +5,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "TAG")
-public class Tag implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Tag /*implements Serializable*/ {
+    /*private static final long serialVersionUID = 1L;*/
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "TAG_SEQUENCE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
-    @Column(name = "TAG_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequence")
+    @Column(name = "TAG_ID", updatable = true)
     private Long id;
 
     @Column(name = "TAG_NAME", nullable = false)
@@ -23,7 +24,7 @@ public class Tag implements Serializable {
     @ManyToMany
     @JoinColumn(name = "news_id")
     @JsonIgnore
-    private Set<News> newses = new HashSet<News>();
+    private List<News> newses;
 
     public Long getId() {
         return id;
@@ -76,11 +77,11 @@ public class Tag implements Serializable {
                 .toString();
     }
 
-    public Set<News> getNewses() {
+    public List<News> getNewses() {
         return newses;
     }
 
-    public void setNewses(Set<News> newses) {
+    public void setNewses(List<News> newses) {
         this.newses = newses;
     }
 }
