@@ -76,16 +76,24 @@
                         </div>
                 </div>
         </div>
+        <div id="paging" class="col-md-9 col-md-offset-3 text-center">
+            <a id="previous-page" href="">
+                <span class="glyphicon glyphicon-circle-arrow-left"></span>
+            </a>
+            <span id="current-page-badge" class="badge">1</span>
+            <a id="next-page" href="">
+                <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </a>
+        </div>
         <!-- end Content -->
     </div>
     <c:import url="common/footer.jsp"/>
     <c:import url="confirmation/deletion.jsp"/>
 </div>
 <script src="<spring:url value="/js/jquery-2.1.1.js"/>"></script>
-<script src="<spring:url value="/js/scripts.js"/>"></script>
 <script src="<spring:url value="/js/api.js"/>"></script>
 <script type="text/javascript">
-    window.onload = loadAllNews();
+    window.onload = loadNewsPage(1);
 </script>
 </body>
 </html>

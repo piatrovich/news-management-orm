@@ -40,3 +40,49 @@ body {
     text-align: center;
     margin: auto;
 }
+
+span.glyphicon-circle-arrow-right, span.glyphicon-circle-arrow-left {
+    font-size: 1.7em;
+}
+
+span.badge {
+    vertical-align: 22%;
+    font-size: 1.5em;
+}
+
+#add-comment-btn {
+    margin: 10px 0 10px 0;
+}
+
+#comments-block {
+    margin-top: 10px;
+}
+
+.single-comment  {
+    margin-top: 10px;
+}
+
+.comment-text {
+    margin-top: 5px;
+    padding-left: 5px;
+}
+
+#comment {
+    display: none;
+}
+
+#pagination-items {
+    padding-bottom: 2.2em;
+}
+
+.newItem {
+    width: 100px;
+}
+
+.new-item-form {
+    padding-bottom: 2.2em;
+}
+
+.item-input {
+    padding-left: 0;
+}

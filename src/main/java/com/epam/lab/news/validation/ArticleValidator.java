@@ -1,6 +1,6 @@
 package com.epam.lab.news.validation;
 
-import com.epam.lab.news.bean.Article;
+import com.epam.lab.news.bean.News;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.*;
 
@@ -23,7 +23,7 @@ public class ArticleValidator implements Validator {
      */
     @Override
     public boolean supports(Class<?> aClass) {
-        return Article.class.isAssignableFrom(aClass);
+        return News.class.isAssignableFrom(aClass);
     }
 
     /**
@@ -51,11 +51,11 @@ public class ArticleValidator implements Validator {
     /**
      * Return object which contains status and errors if <code>status == false</code>
      *
-     * @param article Article which need to be validated
+     * @param news Article which need to be validated
      * @return ValidationResult object
      */
-    public ValidationResult validate(Article article){
-        DataBinder binder = new DataBinder(article);
+    public ValidationResult validate(News news){
+        DataBinder binder = new DataBinder(news);
         binder.setValidator(this);
         binder.validate();
         if(binder.getBindingResult().hasErrors()) {
