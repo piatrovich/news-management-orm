@@ -452,7 +452,12 @@ function initMenuTags(){
         $(document).find("#add-tag-btn").click(function(){
             var newTag = $(document).find(".newItem").val();
             if (newTag.length > 0) {
-
+                var tag = new Object();
+                tag.name = newTag;
+                tag.id = createTag(tag);
+                addTagToNews(tag);
+                deleteTagsFromMenu();
+                loadMenuTagPage(1);
             } else {
                 alert("Please, enter name of tag.")
             }
@@ -460,8 +465,6 @@ function initMenuTags(){
     });
     $(document).ready(function(){
         loadMenuTagPage(1);
-
-        //$(document).find("#");
     });
 }
 
@@ -549,4 +552,20 @@ function initShowCommentsEventHandler() {
             }
         });
     });
+}
+
+function createTag(tag){
+    var result = "";
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/news-management-orm/api/tag",
+        async: false,
+        contentType : 'application/json; charset=utf-8',
+        data: JSON.stringify(tag),
+        success: function (data){
+            result = data["id"];
+        },
+        dataType: "json"
+    });
+    return result;
 }
