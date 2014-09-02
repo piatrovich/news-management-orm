@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface PagingAndSortingRepository<E> extends CRUDRepository<E> {
 
-    List<E> page(Page page, Long[]...args);
+    List<E> page(Page page, Long...params);
 
-    Long pageCount(Long pageSize, Long[]...args);
+    Long pageCount(Long pageSize, Long...params);
 
 }
