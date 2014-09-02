@@ -8,7 +8,7 @@ public interface CRUDRepository<E> {
 
     E one(Long id);
 
-    void save(E entity);
+    E save(E entity);
 
     Long count();
 
