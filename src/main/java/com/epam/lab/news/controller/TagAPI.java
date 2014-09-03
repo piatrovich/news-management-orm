@@ -4,10 +4,8 @@ import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.CRUDRepository;
 import com.epam.lab.news.data.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
@@ -16,7 +14,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/tag")
 @Consumes("application/json")
-@SuppressWarnings("unchecked")
 public class TagAPI {
     @Autowired
     TagService service;
