@@ -60,7 +60,7 @@
                                 <a class="tagItem" href="javascript:;" tagId=""></a>
                             </span>
                             <div class="list-group-item new-item-form">
-                                <div id="new-author">
+                                <div id="new-tag">
                                     <div class="col-md-8 item-input">
                                         <input class="newItem" placeholder="new tag">
                                     </div>
@@ -96,8 +96,35 @@
                 </div>
                 <div id="collapseAuthors" class="panel-collapse collapse">
                     <div class="panel-body">
-                        <div class="list-group">
-                            <a class="list-group-item">Author 1</a>
+                        <div id="menu-authors-block" class="list-group">
+                            <span id="menu-author-template" hidden="hidden">
+                                <a class="tagItem" href="javascript:;" authorId="">Author 1</a>
+                            </span>
+                            <div class="list-group-item new-item-form">
+                                <div id="new-author">
+                                    <div class="col-md-8 item-input">
+                                        <input class="newItem" placeholder="new author">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button id="add-author-btn">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="pagination-authors" class="list-group-item">
+                                <div class="col-md-4" id="previous-author-page">
+                                    <a>
+                                        <span class="glyphicon glyphicon-circle-arrow-left"></span>
+                                    </a>
+                                </div>
+                                <div class="col-md-4">
+                                    <span id="current-author-page-badge" class="badge">0</span>
+                                </div>
+                                <div class="col-md-4" id="next-author-page">
+                                    <a>
+                                        <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

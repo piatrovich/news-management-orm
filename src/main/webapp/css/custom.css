@@ -71,7 +71,7 @@ span.badge {
     display: none;
 }
 
-#pagination-items {
+#pagination-items, #pagination-authors {
     padding-bottom: 2.2em;
 }
 
