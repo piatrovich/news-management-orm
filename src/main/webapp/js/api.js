@@ -445,6 +445,13 @@ $(document).ready(function(){
             $(document).find("#comments-count").text(data);
         }
     });
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/author/count",
+        success: function (data){
+            $(document).find("#authors-count").text(data);
+        }
+    });
 });
 
 function initMenuTags(){
