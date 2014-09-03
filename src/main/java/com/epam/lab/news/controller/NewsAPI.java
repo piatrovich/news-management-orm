@@ -1,6 +1,7 @@
 package com.epam.lab.news.controller;
 
 import com.epam.lab.news.bean.Author;
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
@@ -35,7 +36,6 @@ public class NewsAPI {
 
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody News news){
-        //System.out.println(news.toString());
         //service.save(news);
     }
 
@@ -51,7 +51,7 @@ public class NewsAPI {
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ResponsePage<News> getPage(@RequestParam(value = "page") Long page,
+    public ResponsePage<MappedBean> getPage(@RequestParam(value = "page") Long page,
                                      @RequestParam(value = "size") Long size){
         return service.getPage(new Page(page, size));
     }
@@ -59,17 +59,16 @@ public class NewsAPI {
     @RequestMapping(value = "/{id}/tag", method = RequestMethod.POST)
     public void addTag(@PathVariable Long id, @RequestBody Tag tag){
         service.addTag(id, tag);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(tag));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
     }
 
     @RequestMapping(value = "/{id}/author", method = RequestMethod.POST)
     public void addAuthor(@PathVariable Long id, @RequestBody Author author){
+        service.addAuthor(id, author);
+    }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteNews(@PathVariable Long id){
+        service.deleteNews(id);
     }
 
 }

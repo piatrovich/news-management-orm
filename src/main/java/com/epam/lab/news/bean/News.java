@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "NEWS")
-public class News {
+public class News extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "NEWS_SEQUENCE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
@@ -36,11 +36,17 @@ public class News {
     @JsonIgnore
     private List<Comment> comments;
 
-    @ManyToMany(/*cascade = {CascadeType.REFRESH},*/ fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "NEWS_TAG",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "TAG")})
     private Set<Tag> tags;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "NEWS_AUTHOR",
+            joinColumns = {@JoinColumn(name = "NEWS")},
+            inverseJoinColumns = {@JoinColumn(name = "AUTHOR")})
+    private Set<Author> authors;
 
     public Long getId() {
         return id;
@@ -123,4 +129,11 @@ public class News {
                 .toString();
     }
 
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
 }

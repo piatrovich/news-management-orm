@@ -1,9 +1,12 @@
 package com.epam.lab.news.configuration;
 
+import com.epam.lab.news.bean.Author;
+import com.epam.lab.news.bean.News;
+import com.epam.lab.news.bean.Tag;
+import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
 import com.epam.lab.news.validation.ArticleValidator;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 import oracle.jdbc.pool.OracleDataSource;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.MessageSource;
@@ -11,16 +14,13 @@ import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.Properties;
@@ -72,9 +72,6 @@ public class ApplicationBeans {
         factoryBean.setDataSource(oracleDataSource());
         factoryBean.setPackagesToScan("com.epam.lab.news.bean");
         factoryBean.setHibernateProperties(sessionFactoryProperties());
-        /*new LocalSessionFactoryBuilder(oracleDataSource())
-                .addPackages("com.oracle.driver.bean")
-                .buildSessionFactory();*/
         return factoryBean;
     }
 
@@ -168,6 +165,21 @@ public class ApplicationBeans {
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
     public ArticleValidator validator(){
         return new ArticleValidator();
+    }
+
+    @Bean(name = "AuthorRepository")
+     public BasePagingAndSortingRepositoryImpl authorPagingRepository(){
+        return new BasePagingAndSortingRepositoryImpl(new Author());
+    }
+
+    @Bean(name = "TagRepository")
+    public BasePagingAndSortingRepositoryImpl tagPagingRepository(){
+        return new BasePagingAndSortingRepositoryImpl(new Tag());
+    }
+
+    @Bean(name = "NewsRepository")
+    public BasePagingAndSortingRepositoryImpl commentPagingRepository(){
+        return new BasePagingAndSortingRepositoryImpl(new News());
     }
 
 }

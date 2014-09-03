@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "TAG")
-public class Tag /*implements Serializable*/ {
+public class Tag extends MappedBean /*implements Serializable*/ {
     /*private static final long serialVersionUID = 1L;*/
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "TAG_SEQUENCE")
@@ -63,7 +63,7 @@ public class Tag /*implements Serializable*/ {
 
     @Override
     public int hashCode() {
-        return (int)(id + ((name == null) ? 0: name.hashCode()));
+        return (int)((id == null ? 0 : id) + (name == null ? 0: name.hashCode()));
     }
 
     @Override

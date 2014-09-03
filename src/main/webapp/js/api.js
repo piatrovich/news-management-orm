@@ -105,6 +105,19 @@ $(document).ready(function(){
         var currentPage = $(document).find("#current-tag-page-badge").text();
         loadMenuTagPage(parseInt(currentPage) + 1);
     });
+    /* Authors pagination arrows handlers */
+    $(document).find("#previous-author-page").click(function(event){
+        event.preventDefault();
+        deleteAuthorsFromMenu();
+        var currentPage = $(document).find("#current-author-page-badge").text();
+        loadMenuAuthorPage(parseInt(currentPage) - 1);
+    });
+    $(document).find("#next-author-page").click(function(event){
+        event.preventDefault();
+        deleteAuthorsFromMenu();
+        var currentPage = $(document).find("#current-author-page-badge").text();
+        loadMenuAuthorPage(parseInt(currentPage) + 1);
+    });
 });
 
 function deleteArticlesFromPage(){
@@ -120,8 +133,17 @@ function deleteCommentsFromPage(){
 }
 
 function deleteTagsFromMenu(){
-    var tags = $(document).find("span[class='list-group-item']");
+    var block = $(document).find("#menu-tags-block");
+    var tags = $(block).find("span[class='list-group-item']");
     $.each(tags, function(key, value){
+        $(document).find(value).remove();
+    });
+}
+
+function deleteAuthorsFromMenu(){
+    var block = $(document).find("#menu-authors-block");
+    var authors = $(block).find("span[class='list-group-item']");
+    $.each(authors, function(key, value){
         $(document).find(value).remove();
     });
 }
@@ -280,6 +302,14 @@ function loadNewsForEdit() {
                     $(document).find("#listTags").val(val + ", " + value["name"]);
                 }
             });
+            $.each(data["authors"], function(key, value){
+                var val = $(document).find("#listAuthors").val();
+                if (key == 0) {
+                    $(document).find("#listAuthors").val(value["name"]);
+                } else if (data["authors"].length != (key - 1)){
+                    $(document).find("#listAuthors").val(val + ", " + value["name"]);
+                }
+            });
             editingArticle();
             warningsBehavior(data);
         },
@@ -331,12 +361,12 @@ function addIdToHref(article, items, id) {
 }
 
 function deleteArticle(event, element){
-    var id = element.href.substring(45, element.href.length);
+    var id = element.href.substring(49, element.href.length);
     event.preventDefault();
     if(confirm($(document).find("#deleteDialog").text())){
         $.ajax({
             type: "DELETE",
-            url: "http://localhost:8080/news-management-orm/api/delete/" + id
+            url: "http://localhost:8080/news-management-orm/api/news/" + id
         }).done(function(){
             window.location.replace("http://localhost:8080/news-management-orm");
         });
@@ -445,19 +475,38 @@ $(document).ready(function(){
             $(document).find("#comments-count").text(data);
         }
     });
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/author/count",
+        success: function (data){
+            $(document).find("#authors-count").text(data);
+        }
+    });
 });
 
 function initMenuTags(){
     $(document).ready(function(){
+        $(document).find("#add-tag-btn").click(function(){
+            var newTag = $(document).find(".newItem").val();
+            if (newTag.length > 0) {
+                var tag = new Object();
+                tag.name = newTag;
+                tag.id = createTag(tag);
+                addTagToNews(tag);
+                deleteTagsFromMenu();
+                loadMenuTagPage(1);
+            } else {
+                alert("Please, enter name of tag.")
+            }
+        });
+    });
+    $(document).ready(function(){
         loadMenuTagPage(1);
-
-        //$(document).find("#");
     });
 }
 
 function loadMenuTagPage(page){
     var size = 5;
-    var pagination = $(document).find();
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/news-management-orm/api/tag/page?page=" + page + "&size=" + size,
@@ -477,14 +526,12 @@ function loadMenuTagPage(page){
         },
         dataType: "json"
     });
-
 }
 
 function setPreventDefaultToTags(){
     var tags = $(document).find("a[class='tagItem']");
     $.each(tags, function(key, tag){
         $(tag).click(function(event){
-            //alert($(this).text());
             event.preventDefault();
             var newTag = new Object();
             newTag.id = $(this).attr("tagId");
@@ -517,4 +564,140 @@ function addTagToNews(tag){
     }).done(function(){
         loadNewsForEdit();
     });
+}
+
+function initShowComments(){
+    $(document).find("#comments-block").hide();
+    $(document).find("#comment-pagination").hide();
+    loadCommentPage(1);
+    initShowCommentsEventHandler();
+}
+
+function initShowCommentsEventHandler() {
+    $(document).ready(function(){
+        $(document).find("#show-comments").click(function(event){
+            event.preventDefault();
+            if($("#comment-pagination").is(':visible')){
+                $(document).find("#comments-block").hide();
+                $(document).find("#comment-pagination").hide();
+            } else {
+                $(document).find("#comments-block").show();
+                $(document).find("#comment-pagination").show();
+            }
+        });
+    });
+}
+
+function createTag(tag){
+    var result = "";
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/news-management-orm/api/tag",
+        async: false,
+        contentType : 'application/json; charset=utf-8',
+        data: JSON.stringify(tag),
+        success: function (data){
+            result = data["id"];
+        },
+        dataType: "json"
+    });
+    return result;
+}
+
+function initMenuAuthors(){
+    $(document).ready(function(){
+        $(document).find("#add-author-btn").click(function(){
+            var newAuthor = $(document).find(".newAuthor").val();
+            if (newAuthor.length > 0) {
+                var author = new Object();
+                author.name = newAuthor;
+                author.id = createAuthor(author);
+                addAuthorToNews(author);
+                deleteAuthorsFromMenu();
+                loadMenuAuthorPage(1);
+            } else {
+                alert("Please, enter author name.")
+            }
+        });
+    });
+    $(document).ready(function(){
+        loadMenuAuthorPage(1);
+    });
+}
+
+function loadMenuAuthorPage(page) {
+    var size = 5;
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/author/page?page=" + page + "&size=" + size,
+        success: function(data){
+            $.each(data["items"], function(key, tag){
+                var tagItem = $(document).find("#menu-author-template").clone();
+                $(tagItem).find("a").text(tag["name"]);
+                $(tagItem).find("a").attr("authorId", tag["id"]);
+                $(tagItem).removeAttr("id");
+                $(tagItem).removeAttr("hidden");
+                $(tagItem).attr("class", "list-group-item");
+                $(document).find("#menu-authors-block").prepend(tagItem);
+            });
+            $(document).find("#current-author-page-badge").text(data["page"]["current"]);
+            authorsPaginationHandler(data["page"]);
+            setPreventDefaultToAuthors();
+        },
+        dataType: "json"
+    });
+}
+
+function setPreventDefaultToAuthors(){
+    var authors = $(document).find("a[class='authorItem']");
+    $.each(authors, function(key, author){
+        $(author).click(function(event){
+            event.preventDefault();
+            var newAuthor = new Object();
+            newAuthor.id = $(this).attr("authorId");
+            newAuthor.name = $(this).text();
+            addAuthorToNews(newAuthor);
+        });
+    });
+}
+
+function authorsPaginationHandler(page){
+    if (page["current"] == 1){
+        $(document).find("#previous-author-page").hide();
+    } else {
+        $(document).find("#previous-author-page").show();
+    }
+    if (page["current"] == page["total"]) {
+        $(document).find("#next-author-page").hide();
+    } else {
+        $(document).find("#next-author-page").show();
+    }
+}
+
+function addAuthorToNews(author){
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/news-management-orm/api/news/" + getIDFromCurrentPageUrl() +
+            "/author",
+        contentType : 'application/json; charset=utf-8',
+        data: JSON.stringify(author)
+    }).done(function(){
+        loadNewsForEdit();
+    });
+}
+
+function createAuthor(author){
+    var result = "";
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:8080/news-management-orm/api/author",
+        async: false,
+        contentType : 'application/json; charset=utf-8',
+        data: JSON.stringify(author),
+        success: function (data){
+            result = data["id"];
+        },
+        dataType: "json"
+    });
+    return result;
 }

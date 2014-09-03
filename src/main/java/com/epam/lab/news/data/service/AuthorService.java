@@ -1,9 +1,11 @@
 package com.epam.lab.news.data.service;
 
+import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.bean.MappedBean;
-import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
+import com.epam.lab.news.data.repo.CRUDRepository;
+import com.epam.lab.news.data.repo.PagingAndSortingRepository;
 import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,27 +15,31 @@ import java.util.List;
 
 @Service
 @SuppressWarnings("unchecked")
-public class TagService {
+public class AuthorService {
     @Autowired
-    @Qualifier("TagRepository")
-    BasePagingAndSortingRepositoryImpl repository;
+    @Qualifier("AuthorRepository")
+    private BasePagingAndSortingRepositoryImpl repository;
 
-    public List all(){
-        return repository.all();
+    public List<Author> getAllAuthors(){
+        return (List) repository.all();
     }
 
-    public Tag get(Long id){
-        return (Tag) repository.one(id);
+    public Author getSingleAuthor(Long id){
+        return (Author) repository.one(id);
     }
 
-    public Tag save(Tag tag){
-        return (Tag) repository.save(tag);
+    public Boolean checkExists(Long id){
+        return repository.exists(id);
     }
 
-    public void delete(Long id){
-        Tag tag = (Tag) repository.one(id);
-        if(tag != null){
-            repository.delete(tag);
+    public Author saveAuthor(Author author){
+        return (Author) repository.save(author);
+    }
+
+    public void deleteAuthor(Long id){
+        Author author = (Author) repository.one(id);
+        if(author != null){
+            repository.delete(author);
         }
     }
 
@@ -46,12 +52,8 @@ public class TagService {
         return new ResponsePage<MappedBean>(items, page);
     }
 
-    public Long count(){
+    public Long getCount(){
         return repository.count();
-    }
-
-    public Boolean exists(Long id){
-        return repository.exists(id);
     }
 
 }
