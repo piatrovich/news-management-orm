@@ -98,12 +98,12 @@
                     <div class="panel-body">
                         <div id="menu-authors-block" class="list-group">
                             <span id="menu-author-template" hidden="hidden">
-                                <a class="tagItem" href="javascript:;" authorId="">Author 1</a>
+                                <a class="authorItem" href="javascript:;" authorId="">Author 1</a>
                             </span>
                             <div class="list-group-item new-item-form">
                                 <div id="new-author">
                                     <div class="col-md-8 item-input">
-                                        <input class="newItem" placeholder="new author">
+                                        <input class="newAuthor" placeholder="new author">
                                     </div>
                                     <div class="col-md-4">
                                         <button id="add-author-btn">Add</button>
@@ -241,6 +241,7 @@
     window.onload = loadNewsForEdit();
     window.onload = initMenuTags();
     window.onload = initShowComments();
+    window.onload = initMenuAuthors();
 </script>
 </body>
 </html>

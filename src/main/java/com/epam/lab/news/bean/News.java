@@ -42,6 +42,12 @@ public class News extends MappedBean {
             inverseJoinColumns = {@JoinColumn(name = "TAG")})
     private Set<Tag> tags;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "NEWS_AUTHOR",
+            joinColumns = {@JoinColumn(name = "NEWS")},
+            inverseJoinColumns = {@JoinColumn(name = "AUTHOR")})
+    private Set<Author> authors;
+
     public Long getId() {
         return id;
     }
@@ -123,4 +129,11 @@ public class News extends MappedBean {
                 .toString();
     }
 
+    public Set<Author> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(Set<Author> authors) {
+        this.authors = authors;
+    }
 }

@@ -63,7 +63,7 @@ public class NewsAPI {
 
     @RequestMapping(value = "/{id}/author", method = RequestMethod.POST)
     public void addAuthor(@PathVariable Long id, @RequestBody Author author){
-
+        service.addAuthor(id, author);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

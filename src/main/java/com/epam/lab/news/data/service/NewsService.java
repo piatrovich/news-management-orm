@@ -1,5 +1,6 @@
 package com.epam.lab.news.data.service;
 
+import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
@@ -43,6 +44,14 @@ public class NewsService {
         News news = (News) repository.one(id);
         if (news != null) {
             news.getTags().add(tag);
+        }
+        repository.save(news);
+    }
+
+    public void addAuthor(Long id, Author author){
+        News news = (News)repository.one(id);
+        if (news != null) {
+            news.getAuthors().add(author);
         }
         repository.save(news);
     }
