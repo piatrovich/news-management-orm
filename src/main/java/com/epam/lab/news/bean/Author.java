@@ -7,7 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "AUTHOR")
-public class Author {
+public class Author extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "AUTHOR_SEQUENCE")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequence")

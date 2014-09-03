@@ -1,6 +1,7 @@
 package com.epam.lab.news.data.service;
 
 import com.epam.lab.news.bean.Author;
+import com.epam.lab.news.data.repo.CRUDRepository;
 import com.epam.lab.news.data.repo.PagingAndSortingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Service;
 @SuppressWarnings("unchecked")
 public class AuthorService {
     @Autowired
-    @Qualifier("authorRepository")
-    private PagingAndSortingRepository repository;
+    @Qualifier("AuthorRepository")
+    private CRUDRepository repository;
 
     public Iterable<Author> getAllAuthors(){
         return repository.all();
