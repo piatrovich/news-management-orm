@@ -2,6 +2,7 @@ package com.epam.lab.news.configuration;
 
 import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.data.repo.impl.BaseCRUDRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
 import com.epam.lab.news.validation.ArticleValidator;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 import oracle.jdbc.pool.OracleDataSource;
@@ -169,8 +170,8 @@ public class ApplicationBeans {
     }
 
     @Bean(name = "AuthorRepository")
-    public BaseCRUDRepositoryImpl crudRepository(){
-        return new BaseCRUDRepositoryImpl(new Author());
+    public BasePagingAndSortingRepositoryImpl pagingRepository(){
+        return new BasePagingAndSortingRepositoryImpl(new Author());
     }
 
 }
