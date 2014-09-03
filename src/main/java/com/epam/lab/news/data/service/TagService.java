@@ -1,9 +1,10 @@
 package com.epam.lab.news.data.service;
 
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.PagingAndSortingRepository;
+import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,8 +15,8 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class TagService {
     @Autowired
-    @Qualifier("tagRepository")
-    PagingAndSortingRepository repository;
+    @Qualifier("TagRepository")
+    BasePagingAndSortingRepositoryImpl repository;
 
     public List all(){
         return repository.all();
@@ -37,13 +38,21 @@ public class TagService {
         }
     }
 
-    public ResponsePage<Tag> getPage(Page page){
+    public ResponsePage<MappedBean> getPage(Page page){
         page.setTotal(repository.pageCount(page.getSize()));
-        List<Tag> items = null;
+        List<MappedBean> items = null;
         if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
             items = repository.page(page);
         }
-        return new ResponsePage<Tag>(items, page);
+        return new ResponsePage<MappedBean>(items, page);
+    }
+
+    public Long count(){
+        return repository.count();
+    }
+
+    public Boolean exists(Long id){
+        return repository.exists(id);
     }
 
 }

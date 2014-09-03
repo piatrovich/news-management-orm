@@ -1,6 +1,7 @@
 package com.epam.lab.news.configuration;
 
 import com.epam.lab.news.bean.Author;
+import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.repo.impl.BaseCRUDRepositoryImpl;
 import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
 import com.epam.lab.news.validation.ArticleValidator;
@@ -170,8 +171,13 @@ public class ApplicationBeans {
     }
 
     @Bean(name = "AuthorRepository")
-    public BasePagingAndSortingRepositoryImpl pagingRepository(){
+     public BasePagingAndSortingRepositoryImpl authorPagingRepository(){
         return new BasePagingAndSortingRepositoryImpl(new Author());
+    }
+
+    @Bean(name = "TagRepository")
+    public BasePagingAndSortingRepositoryImpl tagPagingRepository(){
+        return new BasePagingAndSortingRepositoryImpl(new Tag());
     }
 
 }
