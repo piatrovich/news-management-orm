@@ -1,8 +1,8 @@
 package com.epam.lab.news.configuration;
 
 import com.epam.lab.news.bean.Author;
+import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
-import com.epam.lab.news.data.repo.impl.BaseCRUDRepositoryImpl;
 import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
 import com.epam.lab.news.validation.ArticleValidator;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
@@ -72,9 +72,6 @@ public class ApplicationBeans {
         factoryBean.setDataSource(oracleDataSource());
         factoryBean.setPackagesToScan("com.epam.lab.news.bean");
         factoryBean.setHibernateProperties(sessionFactoryProperties());
-        /*new LocalSessionFactoryBuilder(oracleDataSource())
-                .addPackages("com.oracle.driver.bean")
-                .buildSessionFactory();*/
         return factoryBean;
     }
 
@@ -178,6 +175,11 @@ public class ApplicationBeans {
     @Bean(name = "TagRepository")
     public BasePagingAndSortingRepositoryImpl tagPagingRepository(){
         return new BasePagingAndSortingRepositoryImpl(new Tag());
+    }
+
+    @Bean(name = "NewsRepository")
+    public BasePagingAndSortingRepositoryImpl commentPagingRepository(){
+        return new BasePagingAndSortingRepositoryImpl(new News());
     }
 
 }

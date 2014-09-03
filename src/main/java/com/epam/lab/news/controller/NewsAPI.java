@@ -1,6 +1,7 @@
 package com.epam.lab.news.controller;
 
 import com.epam.lab.news.bean.Author;
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
@@ -35,7 +36,6 @@ public class NewsAPI {
 
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody News news){
-        //System.out.println(news.toString());
         //service.save(news);
     }
 
@@ -51,7 +51,7 @@ public class NewsAPI {
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ResponsePage<News> getPage(@RequestParam(value = "page") Long page,
+    public ResponsePage<MappedBean> getPage(@RequestParam(value = "page") Long page,
                                      @RequestParam(value = "size") Long size){
         return service.getPage(new Page(page, size));
     }

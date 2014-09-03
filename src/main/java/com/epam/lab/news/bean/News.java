@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "NEWS")
-public class News {
+public class News extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "NEWS_SEQUENCE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
