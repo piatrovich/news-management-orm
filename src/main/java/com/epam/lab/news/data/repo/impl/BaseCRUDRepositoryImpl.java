@@ -13,9 +13,9 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
     @Autowired
-    SessionFactory sessionFactory;
+    protected SessionFactory sessionFactory;
 
-    private MappedBean bean;
+    protected MappedBean bean;
 
     public BaseCRUDRepositoryImpl(MappedBean bean){
         this.bean = bean;
