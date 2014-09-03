@@ -4,6 +4,8 @@ import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.repo.CRUDRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -39,17 +41,46 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
 
     @Override
     public MappedBean save(MappedBean entity) {
-        return null;
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.saveOrUpdate(entity);
+            transaction.commit();
+        } catch (Exception e){
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
+        return entity;
     }
 
     @Override
     public Long count() {
-        return null;
+        Session session = sessionFactory.openSession();
+        Long count = (Long) session.createCriteria(bean.getClass())
+                .setProjection(Projections
+                        .rowCount())
+                .uniqueResult();
+        session.close();
+        return count;
     }
 
     @Override
     public void delete(MappedBean entity) {
-
+        Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.delete(entity);
+            transaction.commit();
+        } catch (Exception e){
+            if (transaction != null)
+                transaction.rollback();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
