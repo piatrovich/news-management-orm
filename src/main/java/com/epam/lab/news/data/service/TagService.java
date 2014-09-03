@@ -27,8 +27,7 @@ public class TagService {
     }
 
     public Tag save(Tag tag){
-        repository.save(tag);
-        return tag;
+        return (Tag) repository.save(tag);
     }
 
     public void delete(Long id){

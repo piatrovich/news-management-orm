@@ -25,8 +25,7 @@ public class TagAPI {
 
     @RequestMapping(method = RequestMethod.POST)
     public Tag save(@RequestBody Tag tag){
-        service.save(tag);
-        return tag;
+        return service.save(tag);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

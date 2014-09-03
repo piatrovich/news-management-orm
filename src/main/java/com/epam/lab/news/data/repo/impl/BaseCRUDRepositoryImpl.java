@@ -1,6 +1,7 @@
 package com.epam.lab.news.data.repo.impl;
 
 import com.epam.lab.news.bean.MappedBean;
+import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.repo.CRUDRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
