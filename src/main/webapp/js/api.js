@@ -701,3 +701,67 @@ function createAuthor(author){
     });
     return result;
 }
+
+function initMenuForIndexPage(){
+    loadTagsWithCounters(1);
+    loadAuthorsWithCounters(1);
+    $(document).find("#top5").click(function(event){
+        event.preventDefault();
+        loadMostCommentedNews(5);
+    });
+    $(document).find("#top20").click(function(event){
+        event.preventDefault();
+        loadMostCommentedNews(20);
+    });
+    $(document).find("#top100").click(function(event){
+        event.preventDefault();
+        loadMostCommentedNews(100);
+    });
+}
+
+function loadTagsWithCounters(page) {
+    var size = 5;
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/tag/page?page=" + page + "&size=" + size,
+        success: function(data){
+            $.each(data["items"], function(key, tag){
+                var tagItem = $(document).find("#menu-tag-template").clone();
+                $(tagItem).find("a").text(tag["name"]);
+                $(tagItem).find("a").attr("tagId", tag["id"]);
+                $(tagItem).removeAttr("id");
+                $(tagItem).removeAttr("hidden");
+                $(tagItem).attr("class", "list-group-item");
+                $(document).find("#menu-tags-block").prepend(tagItem);
+            });
+            $(document).find("#current-tag-page-badge").text(data["page"]["current"]);
+        },
+        dataType: "json"
+    });
+}
+
+function loadAuthorsWithCounters(page){
+    var size = 5;
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/author/page?page=" + page + "&size=" + size,
+        success: function(data){
+            $.each(data["items"], function(key, tag){
+                var tagItem = $(document).find("#menu-author-template").clone();
+                $(tagItem).find("a").text(tag["name"]);
+                $(tagItem).find("a").attr("authorId", tag["id"]);
+                $(tagItem).removeAttr("id");
+                $(tagItem).removeAttr("hidden");
+                $(tagItem).attr("class", "list-group-item");
+                $(document).find("#menu-authors-block").prepend(tagItem);
+            });
+            $(document).find("#current-author-page-badge").text(data["page"]["current"]);
+        },
+        dataType: "json"
+    });
+}
+
+function loadMostCommentedNews(size){
+    $(document).find("#paging").hide();
+
+}
