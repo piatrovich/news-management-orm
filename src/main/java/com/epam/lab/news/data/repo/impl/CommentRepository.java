@@ -30,7 +30,7 @@ public class CommentRepository implements ICommentRepository {
     public List<Comment> findByNewsId(Long id){
         Session session = sessionFactory.openSession();
         List<Comment> comments = session.createCriteria(Comment.class)
-                .add(Restrictions.eq("news.id", id)).list();
+                .add(Restrictions.eq("news_news_id", id)).list();
         session.close();
         return comments;
     }
@@ -92,9 +92,17 @@ public class CommentRepository implements ICommentRepository {
     @Override
     public List<Comment> page(Page page, Long...params) {
         Session session = sessionFactory.openSession();
-        List<Comment> comments = session.createCriteria(Comment.class)
-                .setFirstResult((int)((page.getCurrent() - 1) * page.getSize()))
-                .setMaxResults(page.getSize().intValue()).list();
+        List<Comment> comments = null;
+        if(params.length < 1) {
+            comments = session.createCriteria(Comment.class)
+                    .setFirstResult((int) ((page.getCurrent() - 1) * page.getSize()))
+                    .setMaxResults(page.getSize().intValue()).list();
+        } else {
+            comments = session.createCriteria(Comment.class)
+                    .add(Restrictions.eq("news.id", params[0]))
+                    .setFirstResult((int) ((page.getCurrent() - 1) * page.getSize()))
+                    .setMaxResults(page.getSize().intValue()).list();
+        }
         session.close();
         return comments;
     }

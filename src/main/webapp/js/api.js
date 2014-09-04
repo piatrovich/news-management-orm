@@ -763,5 +763,34 @@ function loadAuthorsWithCounters(page){
 
 function loadMostCommentedNews(size){
     $(document).find("#paging").hide();
-
+    deleteArticlesFromPage();
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/news/top/" + size,
+        success: function (data) {
+            $.each(data, function (key, value) {
+                var article = $("#article-block-template").clone();
+                $(article).attr("id", function (i, val) {
+                    return val + value["id"];
+                });
+                addIdToHref(article, ["#article-view", "#article-edit", "#article-delete"], value["id"]);
+                $(article).find("#article-delete").click(function(event){
+                    deleteArticle(event, this);
+                });
+                $(article).find("#article-title").text(value["title"]);
+                changeId(article, "#article-title", value["id"]);
+                $(article).find("#article-date").text(new Date(value["creationDate"]).toLocaleDateString());
+                changeId(article, "#article-date", value["id"]);
+                $(article).find("#article-description").text(value["shortText"]);
+                changeId(article, "#article-description", value["id"]);
+                $("#news-body").append(article);
+            });
+            //$(document).find("#current-page-badge").text(data["page"]["current"]);
+            //paginationHandler(data["page"]);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert(jqXHR.status + " Error has occurred");
+        },
+        dataType: "json"
+    });
 }

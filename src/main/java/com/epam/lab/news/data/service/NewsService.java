@@ -7,6 +7,7 @@ import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 public class NewsService {
     @Autowired
     @Qualifier("NewsRepository")
-    BasePagingRepositoryImpl repository;
+    NewsRepository repository;
 
     public List getAll(){
         return repository.all();
@@ -61,6 +62,10 @@ public class NewsService {
         if (news != null) {
             repository.delete(news);
         }
+    }
+
+    public List getMostCommented(Long count){
+        return repository.mostCommented(count);
     }
 
 }

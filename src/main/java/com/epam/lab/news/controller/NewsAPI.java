@@ -71,4 +71,9 @@ public class NewsAPI {
         service.deleteNews(id);
     }
 
+    @RequestMapping(value = "/top/{id}", method = RequestMethod.GET)
+    public List mostCommented(@PathVariable("id") Long id){
+        return service.getMostCommented(id);
+    }
+
 }
