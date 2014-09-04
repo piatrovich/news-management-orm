@@ -4,7 +4,7 @@ import com.epam.lab.news.bean.Comment;
 
 import java.util.List;
 
-public interface ICommentRepository extends PagingAndSortingRepository<Comment> {
+public interface ICommentRepository extends PagingRepository<Comment> {
 
     List<Comment> findByNewsId(Long id);
 

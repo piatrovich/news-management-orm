@@ -2,8 +2,7 @@ package com.epam.lab.news.repo;
 
 import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.configuration.ApplicationConfig;
-import com.epam.lab.news.data.repo.impl.BaseCRUDRepositoryImpl;
-import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
 import com.epam.lab.news.util.TestClassListener;
 import com.epam.lab.news.util.TestClassRunner;
 import junit.framework.Assert;
@@ -25,7 +24,7 @@ import java.util.List;
 public class AuthorRepositoryTest implements TestClassListener {
     @Autowired
     @Qualifier("AuthorRepository")
-    BasePagingAndSortingRepositoryImpl repository;
+    BasePagingRepositoryImpl repository;
 
     @Override
     public void beforeClass() {}

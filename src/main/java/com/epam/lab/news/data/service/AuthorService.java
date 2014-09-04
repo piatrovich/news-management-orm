@@ -4,9 +4,7 @@ import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.CRUDRepository;
-import com.epam.lab.news.data.repo.PagingAndSortingRepository;
-import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,7 +16,7 @@ import java.util.List;
 public class AuthorService {
     @Autowired
     @Qualifier("AuthorRepository")
-    private BasePagingAndSortingRepositoryImpl repository;
+    private BasePagingRepositoryImpl repository;
 
     public List<Author> getAllAuthors(){
         return (List) repository.all();

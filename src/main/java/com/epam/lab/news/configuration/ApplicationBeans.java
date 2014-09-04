@@ -3,7 +3,7 @@ package com.epam.lab.news.configuration;
 import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
-import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
 import com.epam.lab.news.validation.ArticleValidator;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 import oracle.jdbc.pool.OracleDataSource;
@@ -168,18 +168,18 @@ public class ApplicationBeans {
     }
 
     @Bean(name = "AuthorRepository")
-     public BasePagingAndSortingRepositoryImpl authorPagingRepository(){
-        return new BasePagingAndSortingRepositoryImpl(new Author());
+     public BasePagingRepositoryImpl authorPagingRepository(){
+        return new BasePagingRepositoryImpl(new Author());
     }
 
     @Bean(name = "TagRepository")
-    public BasePagingAndSortingRepositoryImpl tagPagingRepository(){
-        return new BasePagingAndSortingRepositoryImpl(new Tag());
+    public BasePagingRepositoryImpl tagPagingRepository(){
+        return new BasePagingRepositoryImpl(new Tag());
     }
 
     @Bean(name = "NewsRepository")
-    public BasePagingAndSortingRepositoryImpl commentPagingRepository(){
-        return new BasePagingAndSortingRepositoryImpl(new News());
+    public BasePagingRepositoryImpl commentPagingRepository(){
+        return new BasePagingRepositoryImpl(new News());
     }
 
 }

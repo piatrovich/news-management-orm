@@ -6,7 +6,7 @@ import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
 public class NewsService {
     @Autowired
     @Qualifier("NewsRepository")
-    BasePagingAndSortingRepositoryImpl repository;
+    BasePagingRepositoryImpl repository;
 
     public List getAll(){
         return repository.all();

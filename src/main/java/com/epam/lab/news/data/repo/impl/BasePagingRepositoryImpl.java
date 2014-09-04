@@ -2,16 +2,16 @@ package com.epam.lab.news.data.repo.impl;
 
 import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.bean.Page;
-import com.epam.lab.news.data.repo.PagingAndSortingRepository;
+import com.epam.lab.news.data.repo.PagingRepository;
 import org.hibernate.Session;
 
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-public class BasePagingAndSortingRepositoryImpl extends BaseCRUDRepositoryImpl
-        implements PagingAndSortingRepository<MappedBean> {
+public class BasePagingRepositoryImpl extends BaseCRUDRepositoryImpl
+        implements PagingRepository<MappedBean> {
 
-    public BasePagingAndSortingRepositoryImpl(MappedBean bean){
+    public BasePagingRepositoryImpl(MappedBean bean){
         super(bean);
     }
 
