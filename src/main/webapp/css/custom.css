@@ -75,14 +75,11 @@ span.badge {
     padding-bottom: 2.2em;
 }
 
-.newItem {
-    width: 100px;
-}
-
 .new-item-form {
-    padding-bottom: 2.2em;
+    padding-bottom: 3.2em;
+    padding-right: 0;
 }
 
 .item-input {
-    padding-left: 0;
+    padding: 0 0;
 }

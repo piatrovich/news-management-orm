@@ -39,7 +39,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTags">Tags</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTags">
+                                <spring:message code="label.tags"/>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -70,7 +72,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseAuthors">Authors</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseAuthors">
+                                <spring:message code="label.authors"/>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -102,16 +106,24 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseComments">Most commented news</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseComments">
+                                <spring:message code="menu.most.commented"/>
+                            </a>
                         </h4>
                     </div>
                 </div>
                 <div id="collapseComments" class="panel-collapse collapse">
                     <div class="panel-body">
                         <div id="menu-comments-block" class="list-group">
-                            <a id="top5" class="list-group-item" href="">Top 5</a>
-                            <a id="top20" class="list-group-item" href="">Top 20</a>
-                            <a id="top100" class="list-group-item" href="">Top 100</a>
+                            <a id="top5" class="list-group-item" href="">
+                                <spring:message code="menu.top.5"/>
+                            </a>
+                            <a id="top20" class="list-group-item" href="">
+                                <spring:message code="menu.top.20"/>
+                            </a>
+                            <a id="top100" class="list-group-item" href="">
+                                <spring:message code="menu.top.100"/>
+                            </a>
                         </div>
                     </div>
                 </div>
