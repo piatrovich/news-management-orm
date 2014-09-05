@@ -7,6 +7,7 @@ import com.epam.lab.news.data.repo.impl.constants.RepositoryConstants;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -20,7 +21,26 @@ public class NewsRepository extends BasePagingRepositoryImpl implements INewsRep
     public List<MappedBean> mostCommented(Long count) {
         Session session = sessionFactory.openSession();
         Query query = session.createSQLQuery(RepositoryConstants.MOST_COMMENTED).addEntity(bean.getClass());
-        return query.list();
+        List<MappedBean> beans = query.list();
+        session.close();
+        return beans;
     }
 
+    @Override
+    public Integer countByTag(Long id) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createSQLQuery(RepositoryConstants.COUNT_BY_TAG).setParameter("id", id);
+        Integer counter = ((BigDecimal)query.list().get(0)).intValue();
+        session.close();
+        return counter;
+    }
+
+    @Override
+    public Integer countByAuthor(Long id) {
+        Session session = sessionFactory.openSession();
+        Query query = session.createSQLQuery(RepositoryConstants.COUNT_BY_AUTHOR).setParameter("id", id);
+        Integer counter = ((BigDecimal)query.list().get(0)).intValue();
+        session.close();
+        return counter;
+    }
 }

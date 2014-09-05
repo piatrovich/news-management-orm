@@ -68,4 +68,12 @@ public class NewsService {
         return repository.mostCommented(count);
     }
 
+    public Integer getCountByTag(Long id){
+        return repository.countByTag(id);
+    }
+
+    public Integer getCountByAuthor(Long id){
+        return repository.countByAuthor(id);
+    }
+
 }

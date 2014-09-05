@@ -7,6 +7,7 @@ import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.repo.CRUDRepository;
+import com.epam.lab.news.data.repo.impl.NewsRepository;
 import com.epam.lab.news.data.service.NewsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -74,6 +75,16 @@ public class NewsAPI {
     @RequestMapping(value = "/top/{id}", method = RequestMethod.GET)
     public List mostCommented(@PathVariable("id") Long id){
         return service.getMostCommented(id);
+    }
+
+    @RequestMapping(value = "/countByTag", method = RequestMethod.GET)
+    public Integer countByTag(@RequestParam("tagId") Long id){
+        return service.getCountByTag(id);
+    }
+
+    @RequestMapping(value = "/countByAuthor", method = RequestMethod.GET)
+    public Integer countByAuthor(@RequestParam("authorId") Long id){
+        return service.getCountByAuthor(id);
     }
 
 }

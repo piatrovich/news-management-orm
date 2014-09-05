@@ -45,9 +45,9 @@ span.glyphicon-circle-arrow-right, span.glyphicon-circle-arrow-left {
     font-size: 1.7em;
 }
 
-span.badge {
+span.small-badge {
     vertical-align: 22%;
-    font-size: 1.5em;
+    font-size: 1.0em;
 }
 
 #add-comment-btn {
@@ -82,4 +82,9 @@ span.badge {
 
 .item-input {
     padding: 0 0;
+}
+
+span.big-badge {
+    vertical-align: 22%;
+    font-size: 1.5em;
 }

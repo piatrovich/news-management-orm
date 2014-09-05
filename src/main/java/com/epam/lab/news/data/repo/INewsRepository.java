@@ -8,4 +8,12 @@ public interface INewsRepository extends PagingRepository<MappedBean> {
 
     List<MappedBean> mostCommented(Long count);
 
+    Integer countByTag(Long id);
+
+    //List<MappedBean> newsByTag(Long id);
+
+    Integer countByAuthor(Long id);
+
+    //List<MappedBean> newsByAuthor(Long id);
+
 }

@@ -50,17 +50,18 @@
                         <div id="menu-tags-block" class="list-group">
                             <span id="menu-tag-template" hidden="hidden">
                                 <a class="tagItem" href="javascript:;" tagId=""></a>
+                                <span class="badge"></span>
                             </span>
                             <div id="pagination-items" class="list-group-item">
-                                <div class="col-md-4" id="previous-tag-page">
+                                <div class="col-md-4" id="previous-tag-countered-page">
                                     <a>
                                         <span class="glyphicon glyphicon-circle-arrow-left"></span>
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <span id="current-tag-page-badge" class="badge">0</span>
+                                    <span id="current-tag-countered-page-badge" class="badge big-badge">0</span>
                                 </div>
-                                <div class="col-md-4" id="next-tag-page">
+                                <div class="col-md-4" id="next-tag-countered-page">
                                     <a>
                                         <span class="glyphicon glyphicon-circle-arrow-right"></span>
                                     </a>
@@ -82,18 +83,19 @@
                     <div class="panel-body">
                         <div id="menu-authors-block" class="list-group">
                             <span id="menu-author-template" hidden="hidden">
-                                <a class="authorItem" href="javascript:;" authorId="">Author 1</a>
+                                <a class="authorItem" href="javascript:;" authorId=""></a>
+                                <span class="badge"></span>
                             </span>
                             <div id="pagination-authors" class="list-group-item">
-                                <div class="col-md-4" id="previous-author-page">
+                                <div class="col-md-4" id="previous-author-countered-page">
                                     <a>
                                         <span class="glyphicon glyphicon-circle-arrow-left"></span>
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <span id="current-author-page-badge" class="badge">0</span>
+                                    <span id="current-author-countered-page-badge" class="badge big-badge">0</span>
                                 </div>
-                                <div class="col-md-4" id="next-author-page">
+                                <div class="col-md-4" id="next-author-countered-page">
                                     <a>
                                         <span class="glyphicon glyphicon-circle-arrow-right"></span>
                                     </a>
@@ -176,7 +178,7 @@
             <a id="previous-page" href="">
                 <span class="glyphicon glyphicon-circle-arrow-left"></span>
             </a>
-            <span id="current-page-badge" class="badge">1</span>
+            <span id="current-page-badge" class="badge big-badge">1</span>
             <a id="next-page" href="">
                 <span class="glyphicon glyphicon-circle-arrow-right"></span>
             </a>

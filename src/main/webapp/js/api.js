@@ -105,6 +105,19 @@ $(document).ready(function(){
         var currentPage = $(document).find("#current-tag-page-badge").text();
         loadMenuTagPage(parseInt(currentPage) + 1);
     });
+    /* Tags (with counters) pagination arrows handlers */
+    $(document).find("#previous-tag-countered-page").click(function(event){
+        event.preventDefault();
+        deleteTagsFromMenu();
+        var currentPage = $(document).find("#current-tag-countered-page-badge").text();
+        loadTagsWithCounters(parseInt(currentPage) - 1);
+    });
+    $(document).find("#next-tag-countered-page").click(function(event){
+        event.preventDefault();
+        deleteTagsFromMenu();
+        var currentPage = $(document).find("#current-tag-countered-page-badge").text();
+        loadTagsWithCounters(parseInt(currentPage) + 1);
+    });
     /* Authors pagination arrows handlers */
     $(document).find("#previous-author-page").click(function(event){
         event.preventDefault();
@@ -117,6 +130,19 @@ $(document).ready(function(){
         deleteAuthorsFromMenu();
         var currentPage = $(document).find("#current-author-page-badge").text();
         loadMenuAuthorPage(parseInt(currentPage) + 1);
+    });
+    /* Authors (with counters) pagination arrows handlers */
+    $(document).find("#previous-author-countered-page").click(function(event){
+        event.preventDefault();
+        deleteAuthorsFromMenu();
+        var currentPage = $(document).find("#current-author-countered-page-badge").text();
+        loadAuthorsWithCounters(parseInt(currentPage) - 1);
+    });
+    $(document).find("#next-author-countered-page").click(function(event){
+        event.preventDefault();
+        deleteAuthorsFromMenu();
+        var currentPage = $(document).find("#current-author-countered-page-badge").text();
+        loadAuthorsWithCounters(parseInt(currentPage) + 1);
     });
 });
 
@@ -554,6 +580,19 @@ function tagsPaginationHandler(page){
     }
 }
 
+function tagsWithCountersPaginationHandler(page){
+    if (page["current"] == 1){
+        $(document).find("#previous-tag-countered-page").hide();
+    } else {
+        $(document).find("#previous-tag-countered-page").show();
+    }
+    if (page["current"] == page["total"]) {
+        $(document).find("#next-tag-countered-page").hide();
+    } else {
+        $(document).find("#next-tag-countered-page").show();
+    }
+}
+
 function addTagToNews(tag){
     $.ajax({
         type: "POST",
@@ -674,6 +713,19 @@ function authorsPaginationHandler(page){
     }
 }
 
+function authorsWithCountersPaginationHandler(page){
+    if (page["current"] == 1){
+        $(document).find("#previous-author-countered-page").hide();
+    } else {
+        $(document).find("#previous-author-countered-page").show();
+    }
+    if (page["current"] == page["total"]) {
+        $(document).find("#next-author-countered-page").hide();
+    } else {
+        $(document).find("#next-author-countered-page").show();
+    }
+}
+
 function addAuthorToNews(author){
     $.ajax({
         type: "POST",
@@ -733,8 +785,10 @@ function loadTagsWithCounters(page) {
                 $(tagItem).removeAttr("hidden");
                 $(tagItem).attr("class", "list-group-item");
                 $(document).find("#menu-tags-block").prepend(tagItem);
+                loadNewsCountByTag(tagItem, tag["id"]);
             });
-            $(document).find("#current-tag-page-badge").text(data["page"]["current"]);
+            $(document).find("#current-tag-countered-page-badge").text(data["page"]["current"]);
+            tagsWithCountersPaginationHandler(data["page"]);
         },
         dataType: "json"
     });
@@ -746,16 +800,18 @@ function loadAuthorsWithCounters(page){
         type: "GET",
         url: "http://localhost:8080/news-management-orm/api/author/page?page=" + page + "&size=" + size,
         success: function(data){
-            $.each(data["items"], function(key, tag){
-                var tagItem = $(document).find("#menu-author-template").clone();
-                $(tagItem).find("a").text(tag["name"]);
-                $(tagItem).find("a").attr("authorId", tag["id"]);
-                $(tagItem).removeAttr("id");
-                $(tagItem).removeAttr("hidden");
-                $(tagItem).attr("class", "list-group-item");
-                $(document).find("#menu-authors-block").prepend(tagItem);
+            $.each(data["items"], function(key, author){
+                var authorItem = $(document).find("#menu-author-template").clone();
+                $(authorItem).find("a").text(author["name"]);
+                $(authorItem).find("a").attr("authorId", author["id"]);
+                $(authorItem).removeAttr("id");
+                $(authorItem).removeAttr("hidden");
+                $(authorItem).attr("class", "list-group-item");
+                $(document).find("#menu-authors-block").prepend(authorItem);
+                loadNewsCountByAuthor(authorItem, author["id"]);
             });
-            $(document).find("#current-author-page-badge").text(data["page"]["current"]);
+            $(document).find("#current-author-countered-page-badge").text(data["page"]["current"]);
+            authorsWithCountersPaginationHandler(data["page"]);
         },
         dataType: "json"
     });
@@ -785,12 +841,35 @@ function loadMostCommentedNews(size){
                 changeId(article, "#article-description", value["id"]);
                 $("#news-body").append(article);
             });
-            //$(document).find("#current-page-badge").text(data["page"]["current"]);
-            //paginationHandler(data["page"]);
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert(jqXHR.status + " Error has occurred");
         },
         dataType: "json"
     });
+}
+
+function loadNewsCountByTag(tagBlock, tagId){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/news/countByTag?tagId=" + tagId,
+        success: function(data){
+            $(tagBlock).find(".badge").text(data);
+        },
+        dataType: "json"
+    });
+}
+
+function loadNewsCountByAuthor(authorBlock, authorId){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/news/countByAuthor?authorId=" + authorId,
+        success: function(data){
+            $(authorBlock).find(".badge").text(data);
+        },
+        dataType: "json"
+    });
+}
+
+function loadAllNewsByTag(){
 }

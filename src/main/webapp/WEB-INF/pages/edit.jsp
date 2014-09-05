@@ -80,7 +80,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <span id="current-tag-page-badge" class="badge">0</span>
+                                    <span id="current-tag-page-badge" class="badge big-badge">0</span>
                                 </div>
                                 <div class="col-md-4" id="next-tag-page">
                                     <a>
@@ -125,7 +125,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <span id="current-author-page-badge" class="badge">0</span>
+                                    <span id="current-author-page-badge" class="badge big-badge">0</span>
                                 </div>
                                 <div class="col-md-4" id="next-author-page">
                                     <a>
@@ -231,7 +231,7 @@
                         <a id="previous-comment-page" href="">
                             <span class="glyphicon glyphicon-circle-arrow-left"></span>
                         </a>
-                        <span id="current-comment-page-badge" class="badge">1</span>
+                        <span id="current-comment-page-badge" class="badge big-badge">1</span>
                         <a id="next-comment-page" href="">
                             <span class="glyphicon glyphicon-circle-arrow-right"></span>
                         </a>
