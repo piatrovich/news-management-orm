@@ -49,7 +49,7 @@
                     <div class="panel-body">
                         <div id="menu-tags-block" class="list-group">
                             <span id="menu-tag-template" hidden="hidden">
-                                <a class="tagItem" href="javascript:;" tagId=""></a>
+                                <a class="tagItem" href="" tagId=""></a>
                                 <span class="badge"></span>
                             </span>
                             <div id="pagination-items" class="list-group-item">

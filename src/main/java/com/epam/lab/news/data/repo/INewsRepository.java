@@ -10,10 +10,10 @@ public interface INewsRepository extends PagingRepository<MappedBean> {
 
     Integer countByTag(Long id);
 
-    //List<MappedBean> newsByTag(Long id);
+    List<MappedBean> newsByTag(Long id);
 
     Integer countByAuthor(Long id);
 
-    //List<MappedBean> newsByAuthor(Long id);
+    List<MappedBean> newsByAuthor(Long id);
 
 }

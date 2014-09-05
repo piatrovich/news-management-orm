@@ -72,8 +72,16 @@ public class NewsService {
         return repository.countByTag(id);
     }
 
+    public List<MappedBean> newsByTag(Long id){
+        return repository.newsByTag(id);
+    }
+
     public Integer getCountByAuthor(Long id){
         return repository.countByAuthor(id);
+    }
+
+    public List<MappedBean> newsByAuthor(Long id){
+        return repository.newsByAuthor(id);
     }
 
 }

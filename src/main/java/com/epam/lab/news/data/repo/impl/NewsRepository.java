@@ -6,6 +6,7 @@ import com.epam.lab.news.data.repo.INewsRepository;
 import com.epam.lab.news.data.repo.impl.constants.RepositoryConstants;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -36,11 +37,33 @@ public class NewsRepository extends BasePagingRepositoryImpl implements INewsRep
     }
 
     @Override
+    public List<MappedBean> newsByTag(Long id) {
+        Session session = sessionFactory.openSession();
+        List<MappedBean> newses = session.createSQLQuery(RepositoryConstants.NEWS_BY_TAG)
+                .addEntity(bean.getClass())
+                .setParameter("id", id)
+                .list();
+        session.close();
+        return newses;
+    }
+
+    @Override
     public Integer countByAuthor(Long id) {
         Session session = sessionFactory.openSession();
         Query query = session.createSQLQuery(RepositoryConstants.COUNT_BY_AUTHOR).setParameter("id", id);
         Integer counter = ((BigDecimal)query.list().get(0)).intValue();
         session.close();
         return counter;
+    }
+
+    @Override
+    public List<MappedBean> newsByAuthor(Long id) {
+        Session session = sessionFactory.openSession();
+        List<MappedBean> newses = session.createSQLQuery(RepositoryConstants.NEWS_BY_AUTHOR)
+                .addEntity(bean.getClass())
+                .setParameter("id", id)
+                .list();
+        session.close();
+        return newses;
     }
 }

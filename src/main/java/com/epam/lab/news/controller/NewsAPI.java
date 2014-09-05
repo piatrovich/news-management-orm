@@ -82,9 +82,19 @@ public class NewsAPI {
         return service.getCountByTag(id);
     }
 
+    @RequestMapping(value = "/newsByTag", method = RequestMethod.GET)
+    public List<MappedBean> newsByTag(@RequestParam("tagId") Long id){
+        return service.newsByTag(id);
+    }
+
     @RequestMapping(value = "/countByAuthor", method = RequestMethod.GET)
     public Integer countByAuthor(@RequestParam("authorId") Long id){
         return service.getCountByAuthor(id);
+    }
+
+    @RequestMapping(value = "/newsByAuthor", method = RequestMethod.GET)
+    public List<MappedBean> newsByAuthor(@RequestParam("authorId") Long id){
+        return service.newsByAuthor(id);
     }
 
 }
