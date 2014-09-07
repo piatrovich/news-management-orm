@@ -57,6 +57,12 @@ public class ApplicationBeans {
     @Value("${jdbc.password}")
     private String password;
 
+    /**
+     * Oracle data source
+     *
+     * @return DataSource
+     * @throws SQLException if initialization failed
+     */
     @Bean
     public OracleDataSource oracleDataSource() throws SQLException {
         Locale.setDefault(Locale.ENGLISH);
@@ -67,6 +73,12 @@ public class ApplicationBeans {
         return dataSource;
     }
 
+    /**
+     * Session factory
+     *
+     * @return SessionFactory object
+     * @throws SQLException if something is wrong
+     */
     @Bean
     public LocalSessionFactoryBean sessionFactory() throws SQLException {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
@@ -76,6 +88,12 @@ public class ApplicationBeans {
         return factoryBean;
     }
 
+    /**
+     * Transaction manager
+     *
+     * @return Configured TransactionManager object
+     * @throws SQLException
+     */
     @Bean
     public HibernateTransactionManager transactionManager() throws SQLException{
         HibernateTransactionManager manager = new HibernateTransactionManager();
@@ -83,11 +101,21 @@ public class ApplicationBeans {
         return manager;
     }
 
+    /**
+     * Translation post processor (for repository annotations)
+     *
+     * @return TranslationPostProcessor object
+     */
     @Bean
     public PersistenceExceptionTranslationPostProcessor postProcessor(){
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
+    /**
+     * Configures session factory
+     *
+     * @return Properties object for session factory
+     */
     @Bean
     Properties sessionFactoryProperties(){
         Properties properties = new Properties();
@@ -168,21 +196,41 @@ public class ApplicationBeans {
         return new ArticleValidator();
     }
 
+    /**
+     * Repository implementation for mapping authors
+     *
+     * @return Initialized repository implementation
+     */
     @Bean(name = "AuthorRepository")
      public AuthorRepository authorRepository(){
         return new AuthorRepository(new Author());
     }
 
+    /**
+     * Repository implementation for mapping tags
+     *
+     * @return Initialized repository implementation
+     */
     @Bean(name = "TagRepository")
     public TagRepository tagRepository(){
         return new TagRepository(new Tag());
     }
 
+    /**
+     * Repository implementation for mapping news
+     *
+     * @return Initialized repository implementation
+     */
     @Bean(name = "NewsRepository")
     public NewsRepository newsRepository() {
         return new NewsRepository(new News());
     }
 
+    /**
+     * Repository implementation for mapping comments
+     *
+     * @return Initialized repository implementation
+     */
     @Bean(name = "CommentRepository")
     public CommentRepository commentRepository() {
         return new CommentRepository(new Comment());
