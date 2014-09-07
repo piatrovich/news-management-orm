@@ -6,29 +6,28 @@ import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.CRUDRepository;
-import com.epam.lab.news.data.repo.impl.NewsRepository;
 import com.epam.lab.news.data.service.NewsService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import oracle.jdbc.pool.OracleDataSource;
+import com.epam.lab.news.validation.ArticleValidator;
+import com.epam.lab.news.validation.ValidationResult;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sql.DataSource;
 import javax.ws.rs.Consumes;
-import java.sql.Connection;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/news")
 @Consumes("application/json")
 public class NewsAPI {
+    private Logger logger = Logger.getLogger("errors");
+
     @Autowired
     NewsService service;
+
+    /** Wiring validator for articles */
+    @Autowired
+    ArticleValidator validator;
 
     @RequestMapping(method = RequestMethod.GET)
     public List news(){
@@ -36,14 +35,12 @@ public class NewsAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void save(@RequestBody News news){
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(news));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+    public @ResponseBody ValidationResult save(@RequestBody News news){
+        ValidationResult result = validator.validate(news);
+        if (result.isStatus()){
+            service.saveNews(news);
         }
-        service.saveNews(news);
+        return result;
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)

@@ -13,7 +13,7 @@ import java.util.Set;
 public class News extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "NEWS_SEQUENCE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequence")
     @Column(name = "news_id")
     private Long id;
 

@@ -10,7 +10,7 @@ import java.util.Date;
 public class Comment extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "COMMENTS_SEQUENCE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequence")
     @Column(name = "comment_id")
     private Long id;
 

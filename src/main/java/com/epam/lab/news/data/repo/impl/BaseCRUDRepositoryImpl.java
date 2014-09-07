@@ -3,6 +3,8 @@ package com.epam.lab.news.data.repo.impl;
 import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.repo.CRUDRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -37,14 +39,13 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
     @Override
     public MappedBean save(MappedBean entity) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = null;
+        session.saveOrUpdate(entity);
+        ObjectMapper mapper = new ObjectMapper();
         try {
-            transaction = session.beginTransaction();
-            session.saveOrUpdate(entity);
-            transaction.commit();
-        } catch (Exception e){
-            if (transaction != null)
-                transaction.rollback();
+            System.out.println("saving entity:");
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(entity));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
         }
         return entity;
     }

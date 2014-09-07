@@ -10,10 +10,10 @@ class ValidationConstants {
     public static final String FIELD_TITLE = "title";
 
     /** Keeps field name of article description */
-    public static final String FIELD_DESCRIPTION = "description";
+    public static final String FIELD_DESCRIPTION = "shortText";
 
     /** Keeps field name of article text */
-    public static final String FIELD_TEXT = "text";
+    public static final String FIELD_TEXT = "fullText";
 
     /** Keeps error code for empty title */
     public static final String CODE_TITLE_EMPTY = "title.empty";

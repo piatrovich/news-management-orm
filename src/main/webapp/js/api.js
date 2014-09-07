@@ -435,6 +435,7 @@ function deleteArticle(event, element){
 function addingArticle(){
     $(document).find("#createBtn").click(function(event){
         event.preventDefault();
+        eraseErrors();
         var article = new Object();
         article.title = $(document).find("#inputTitle").val();
         article.shortText = $(document).find("#inputShort").val();
@@ -488,6 +489,12 @@ function setErrors(data){
             $(document).find("#text-danger").text(v);
         }
     });
+}
+
+function eraseErrors(){
+    $(document).find("#title-danger").text("");
+    $(document).find("#description-danger").text("");
+    $(document).find("#text-danger").text("");
 }
 
 function warningsBehavior(data){
