@@ -49,19 +49,12 @@ public class Comment extends MappedBean {
         this.creationDate = creationDate;
     }
 
-    /*public Long getNews() {
-        return news;
-    }
-
-    public void setNews(Long news) {
+    public void setNews(News news) {
         this.news = news;
-    }*/
+    }
 
     public News getNews() {
         return news;
     }
 
-    public void setNews(News news) {
-        this.news = news;
-    }
 }

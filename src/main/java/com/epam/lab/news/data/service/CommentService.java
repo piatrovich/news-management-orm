@@ -26,6 +26,10 @@ public class CommentService {
         return repository.all();
     }
 
+    public MappedBean one(Long id){
+        return repository.one(id);
+    }
+
     public Long getCount(Long...params){
         return repository.count(params);
     }
@@ -44,18 +48,24 @@ public class CommentService {
         }
     }
 
-    public void saveComment(Comment comment, Long newsId){
+    public MappedBean saveComment(Comment comment, Long newsId){
         News news = new News();
         news.setId(newsId);
         comment.setNews(news);
         comment.setCreationDate(new Date());
-        repository.save(comment);
+        return repository.save(comment);
     }
 
     public ResponsePage<MappedBean> getPage(Page page, Long...params){
         page.setTotal(getPageCount(page.getSize(), params));
         List<MappedBean> items = repository.page(page, params);
         return new ResponsePage<MappedBean>(items, page);
+    }
+
+    public void deleteComment(Long id){
+        MappedBean comment = repository.one(id);
+        if (comment != null)
+            repository.delete(comment);
     }
 
 }
