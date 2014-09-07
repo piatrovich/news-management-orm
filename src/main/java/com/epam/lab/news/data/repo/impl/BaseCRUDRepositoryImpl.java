@@ -11,6 +11,7 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -63,15 +64,7 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
     @Override
     public void delete(MappedBean entity) {
         Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.delete(entity);
-            transaction.commit();
-        } catch (Exception e){
-            if (transaction != null)
-                transaction.rollback();
-        }
+        session.delete(entity);
     }
 
     @Override

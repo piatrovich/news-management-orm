@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -79,7 +80,7 @@ public class NewsService {
     }
 
     public void deleteNews(Long id){
-        News news = (News) repository.one(id);
+        MappedBean news = (News) repository.one(id);
         if (news != null) {
             repository.delete(news);
         }

@@ -1,7 +1,7 @@
 package com.epam.lab.news.exception.handler;
 
+import com.epam.lab.news.exception.bean.APIException;
 import com.epam.lab.news.exception.bean.ArticleNotFoundException;
-import com.epam.lab.news.exception.bean.ControllerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,7 +21,7 @@ public class GlobalExceptionHandler {
      *
      * @return 500 - Server error
      */
-    @ExceptionHandler(value = ControllerException.class)
+    @ExceptionHandler(value = APIException.class)
     public ResponseEntity<Object> handleControllerException() {
         return new ResponseEntity<Object>(HttpStatus.INTERNAL_SERVER_ERROR);
     }

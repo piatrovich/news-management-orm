@@ -5,13 +5,12 @@ package com.epam.lab.news.exception.bean;
  *
  * @author Dmitry Petrovich
  */
-public class ControllerException extends RuntimeException {
+public class APIException extends InfrastructureException {
 
     /**
      * Constructor
      */
-    public ControllerException() {
-        super();
+    public APIException(String message, Throwable cause) {
+        super(message, cause);
     }
-
 }
