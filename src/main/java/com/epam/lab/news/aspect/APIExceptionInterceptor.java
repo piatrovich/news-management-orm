@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public class APIExceptionInterceptor {
 
-    @AfterThrowing(pointcut = "execution(* com.epam.lab.news.data.service..*(..))",
+    @AfterThrowing(pointcut = "execution(* com.epam.lab.news.controller..*(..))",
             throwing = "exception")
     public void handle(ServiceException exception) throws APIException {
         throw new APIException("API exception", exception);
