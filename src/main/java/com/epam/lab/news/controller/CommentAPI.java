@@ -1,6 +1,7 @@
 package com.epam.lab.news.controller;
 
 import com.epam.lab.news.bean.Comment;
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.service.CommentService;
@@ -39,7 +40,7 @@ public class CommentAPI {
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ResponsePage<Comment> showPage(@RequestParam(value = "size") Long size,
+    public ResponsePage<MappedBean> showPage(@RequestParam(value = "size") Long size,
                                           @RequestParam(value = "page") Long page,
                                           @RequestParam(value = "newsId") Long newsId){
         return service.getPage(new Page(page, size), newsId);

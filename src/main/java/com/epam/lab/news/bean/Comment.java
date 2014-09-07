@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "COMMENTS")
-public class Comment {
+public class Comment extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "COMMENTS_SEQUENCE")
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")

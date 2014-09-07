@@ -1,71 +1,45 @@
 package com.epam.lab.news.data.repo.impl;
 
 import com.epam.lab.news.bean.Comment;
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.bean.Page;
-import com.epam.lab.news.data.repo.ICommentRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository("commentRepository")
 @SuppressWarnings("unchecked")
-public class CommentRepository implements ICommentRepository {
+public class CommentRepository extends BasePagingRepositoryImpl {
     @Autowired
     SessionFactory sessionFactory;
 
-    @Override
-    public List<Comment> all(Long...params) {
-        Session session = sessionFactory.getCurrentSession();
-        List<Comment> comments = session.createCriteria(Comment.class).list();
-        //session.close();
-        return comments;
-    }
-
-    public List<Comment> findByNewsId(Long id){
-        Session session = sessionFactory.getCurrentSession();
-        List<Comment> comments = session.createCriteria(Comment.class)
-                .add(Restrictions.eq("news_news_id", id)).list();
-        //session.close();
-        return comments;
+    public CommentRepository(MappedBean bean){
+        super(bean);
     }
 
     @Override
+    public List<MappedBean> all(Long...params) {
+        if (params.length > 0 && params[0]!= null){
+            Session session = sessionFactory.getCurrentSession();
+            return session.createCriteria(Comment.class)
+                    .add(Restrictions.eq("news_news_id", params[0]))
+                    .list();
+        } else {
+            return super.all(params);
+        }
+    }
+
+    //@Override
     public Long getCountByNewsId(Long newsId) {
         Session session = sessionFactory.getCurrentSession();
         Long count = (Long) session.createCriteria(Comment.class)
                 .add(Restrictions.eq("news.id", newsId))
                 .setProjection(Projections.rowCount())
                 .uniqueResult();
-        //session.close();
         return count;
-    }
-
-    @Override
-    public Comment one(Long id) {
-        return null;
-    }
-
-    @Override
-    public Comment save(Comment entity) {
-        Session session = sessionFactory.getCurrentSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.save(entity);
-            transaction.commit();
-        } catch (Exception e){
-            if (transaction != null)
-                transaction.rollback();
-        } finally {
-            //session.close();
-        }
-        return entity;
     }
 
     @Override
@@ -78,30 +52,17 @@ public class CommentRepository implements ICommentRepository {
     }
 
     @Override
-    public void delete(Comment entity) {
-
-    }
-
-    @Override
-    public boolean exists(Long id) {
-        return false;
-    }
-
-    @Override
-    public List<Comment> page(Page page, Long...params) {
+    public List<MappedBean> page(Page page, Long...params) {
         Session session = sessionFactory.getCurrentSession();
-        List<Comment> comments = null;
-        if(params.length < 1) {
-            comments = session.createCriteria(Comment.class)
-                    .setFirstResult((int) ((page.getCurrent() - 1) * page.getSize()))
-                    .setMaxResults(page.getSize().intValue()).list();
-        } else {
-            comments = session.createCriteria(Comment.class)
+        if(params.length > 0 && params[0] != null)  {
+            return session.createCriteria(Comment.class)
                     .add(Restrictions.eq("news.id", params[0]))
                     .setFirstResult((int) ((page.getCurrent() - 1) * page.getSize()))
-                    .setMaxResults(page.getSize().intValue()).list();
+                    .setMaxResults(page.getSize().intValue())
+                    .list();
+        } else {
+            return super.page(page, params);
         }
-        return comments;
     }
 
     @Override
@@ -113,4 +74,5 @@ public class CommentRepository implements ICommentRepository {
         }
         return count;
     }
+
 }

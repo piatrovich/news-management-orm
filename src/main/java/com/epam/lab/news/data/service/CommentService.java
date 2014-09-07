@@ -1,10 +1,12 @@
 package com.epam.lab.news.data.service;
 
 import com.epam.lab.news.bean.Comment;
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.News;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.repo.ICommentRepository;
+import com.epam.lab.news.data.repo.impl.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,8 +20,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class CommentService {
     @Autowired
-    @Qualifier("commentRepository")
-    ICommentRepository repository;
+    @Qualifier("CommentRepository")
+    CommentRepository repository;
 
     public List getAll(){
         return repository.all();
@@ -30,7 +32,7 @@ public class CommentService {
     }
 
     public List getByNewsId(Long id){
-        return repository.findByNewsId(id);
+        return repository.all(id);
     }
 
     public Long getPageCountByNewsId(Long pageSize, Long newsId){
@@ -51,13 +53,13 @@ public class CommentService {
         repository.save(comment);
     }
 
-    public ResponsePage<Comment> getPage(Page page, Long...args){
+    public ResponsePage<MappedBean> getPage(Page page, Long...args){
         page.setTotal(repository.pageCount(page.getSize()));
-        List<Comment> items = null;
+        List<MappedBean> items = null;
         if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
             items = repository.page(page, args);
         }
-        return new ResponsePage<Comment>(items, page);
+        return new ResponsePage<MappedBean>(items, page);
     }
 
 }
