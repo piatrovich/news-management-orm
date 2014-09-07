@@ -188,15 +188,20 @@ function paginationHandler(page){
 }
 
 function commentPaginationHandler(page){
-    if (page["current"] == 1){
+    if(page["total"] != 0) {
+        if (page["current"] == 1) {
+            $(document).find("#previous-comment-page").hide();
+        } else {
+            $(document).find("#previous-comment-page").show();
+        }
+        if (page["current"] == page["total"]) {
+            $(document).find("#next-comment-page").hide();
+        } else {
+            $(document).find("#next-comment-page").show();
+        }
+    } else {
         $(document).find("#previous-comment-page").hide();
-    } else {
-        $(document).find("#previous-comment-page").show();
-    }
-    if (page["current"] == page["total"]) {
         $(document).find("#next-comment-page").hide();
-    } else {
-        $(document).find("#next-comment-page").show();
     }
 }
 
