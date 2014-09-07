@@ -1,12 +1,15 @@
 package com.epam.lab.news.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "NEWS")
@@ -32,21 +35,25 @@ public class News extends MappedBean {
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name = "NEWS_TAG",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "TAG")})
     @JsonIgnore
     private Set<Tag> tags;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
+    @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name = "NEWS_AUTHOR",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR")})
     @JsonIgnore
     private Set<Author> authors;
 
-    @OneToMany(mappedBy = "news")
+    @OneToMany(orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "NEWS_NEWS_ID", updatable = false)
     @JsonIgnore
     private List<Comment> comments;
 
