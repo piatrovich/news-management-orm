@@ -5,7 +5,6 @@ import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.News;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.ICommentRepository;
 import com.epam.lab.news.data.repo.impl.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -27,16 +26,16 @@ public class CommentService {
         return repository.all();
     }
 
-    public Long getCount(){
-        return repository.count();
+    public Long getCount(Long...params){
+        return repository.count(params);
     }
 
     public List getByNewsId(Long id){
         return repository.all(id);
     }
 
-    public Long getPageCountByNewsId(Long pageSize, Long newsId){
-        Long total = repository.getCountByNewsId(newsId);
+    public Long getPageCount(Long pageSize, Long...params){
+        Long total = repository.count(params);
         if (pageSize != 0L){
             Long count = total / pageSize;
             return total % pageSize > 0 ? ++count : count;
@@ -53,12 +52,9 @@ public class CommentService {
         repository.save(comment);
     }
 
-    public ResponsePage<MappedBean> getPage(Page page, Long...args){
-        page.setTotal(repository.pageCount(page.getSize()));
-        List<MappedBean> items = null;
-        if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
-            items = repository.page(page, args);
-        }
+    public ResponsePage<MappedBean> getPage(Page page, Long...params){
+        page.setTotal(getPageCount(page.getSize(), params));
+        List<MappedBean> items = repository.page(page, params);
         return new ResponsePage<MappedBean>(items, page);
     }
 

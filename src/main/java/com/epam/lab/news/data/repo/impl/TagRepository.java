@@ -26,7 +26,6 @@ public class TagRepository extends BasePagingRepositoryImpl {
             List<MappedBean> tags = session.createSQLQuery(RepositoryConstants.TAGS_BY_NEWS_ID)
                     .addEntity(bean.getClass())
                     .setParameter("id", params[0]).list();
-            //session.close();
             return tags;
         } else {
             return super.all(params);

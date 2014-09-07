@@ -98,7 +98,7 @@
                     <a id="previous-comment-page" href="">
                         <span class="glyphicon glyphicon-circle-arrow-left"></span>
                     </a>
-                    <span id="current-comment-page-badge" class="badge">1</span>
+                    <span id="current-comment-page-badge" class="badge big-badge">1</span>
                     <a id="next-comment-page" href="">
                         <span class="glyphicon glyphicon-circle-arrow-right"></span>
                     </a>

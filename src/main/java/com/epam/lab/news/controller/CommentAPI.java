@@ -24,8 +24,8 @@ public class CommentAPI {
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)
-    public Long showCount(){
-        return service.getCount();
+    public Long showCount(@RequestParam(value = "newsId", required = false) Long id){
+        return service.getCount(id);
     }
 
     @RequestMapping(value = "/byNews/{id}", method = RequestMethod.GET)
@@ -35,15 +35,15 @@ public class CommentAPI {
 
     @RequestMapping(value = "/page/count", method = RequestMethod.GET)
     public Long showPageCount(@RequestParam(value = "size") Long size,
-                              @RequestParam(value = "newsId") Long newsId){
-        return service.getPageCountByNewsId(size, newsId);
+                              @RequestParam(value = "newsId", required = false) Long newsId){
+        return service.getPageCount(size, newsId);
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ResponsePage<MappedBean> showPage(@RequestParam(value = "size") Long size,
                                           @RequestParam(value = "page") Long page,
-                                          @RequestParam(value = "newsId") Long newsId){
-        return service.getPage(new Page(page, size), newsId);
+                                          @RequestParam(value = "newsId", required = false) Long id){
+        return service.getPage(new Page(page, size), id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)

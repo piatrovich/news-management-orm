@@ -38,7 +38,7 @@ public interface CRUDRepository<E> {
      *
      * @return Long number
      */
-    Long count();
+    Long count(Long...params);
 
     /**
      * Deletes object from DB

@@ -32,23 +32,17 @@ public class CommentRepository extends BasePagingRepositoryImpl {
         }
     }
 
-    //@Override
-    public Long getCountByNewsId(Long newsId) {
-        Session session = sessionFactory.getCurrentSession();
-        Long count = (Long) session.createCriteria(Comment.class)
-                .add(Restrictions.eq("news.id", newsId))
-                .setProjection(Projections.rowCount())
-                .uniqueResult();
-        return count;
-    }
-
     @Override
-    public Long count() {
-        Session session = sessionFactory.getCurrentSession();
-        return (Long) session.createCriteria(Comment.class)
-                .setProjection(Projections
-                        .rowCount())
-                .uniqueResult();
+    public Long count(Long...params) {
+        if (params.length > 0 && params[0]!= null){
+            Session session = sessionFactory.getCurrentSession();
+            return (Long) session.createCriteria(Comment.class)
+                    .add(Restrictions.eq("news.id", params[0]))
+                    .setProjection(Projections.rowCount())
+                    .uniqueResult();
+        } else {
+            return super.count(params);
+        }
     }
 
     @Override
@@ -69,8 +63,12 @@ public class CommentRepository extends BasePagingRepositoryImpl {
     public Long pageCount(Long pageSize, Long...params) {
         Long count = 0L;
         if (pageSize != 0L) {
-            count = params.length != 0 ? getCountByNewsId(params[0]) : count();
-            count = count % pageSize > 0 ? count / pageSize + 1: count / pageSize;
+            if (params.length > 0 && params[0] != null){
+                count = count(params);
+                count = count % pageSize > 0 ? count / pageSize + 1: count / pageSize;
+            } else {
+                return super.count(params);
+            }
         }
         return count;
     }

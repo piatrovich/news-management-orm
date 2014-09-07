@@ -51,7 +51,7 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
     }
 
     @Override
-    public Long count() {
+    public Long count(Long...params) {
         Session session = sessionFactory.getCurrentSession();
         Long count = (Long) session.createCriteria(bean.getClass())
                 .setProjection(Projections
