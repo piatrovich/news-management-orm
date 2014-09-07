@@ -4,22 +4,26 @@ import com.epam.lab.news.bean.Author;
 import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
+import com.epam.lab.news.data.repo.impl.AuthorRepository;
 import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @SuppressWarnings("unchecked")
+@Transactional(propagation = Propagation.REQUIRED)
 public class AuthorService {
     @Autowired
     @Qualifier("AuthorRepository")
-    private BasePagingRepositoryImpl repository;
+    AuthorRepository repository;
 
-    public List<Author> getAllAuthors(){
-        return (List) repository.all();
+    public List<Author> getAllAuthors(Long...params){
+        return (List) repository.all(params);
     }
 
     public Author getSingleAuthor(Long id){

@@ -19,8 +19,8 @@ public class TagAPI {
     TagService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List tags(){
-        return service.all();
+    public List tags(@RequestParam(value = "newsId", required = false) Long id){
+        return service.all(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)

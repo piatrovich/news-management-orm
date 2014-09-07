@@ -15,7 +15,7 @@ public interface CRUDRepository<E> {
      *
      * @return List of all entities
      */
-    List<E> all();
+    List<E> all(Long...params);
 
     /**
      * Returns single entity by ID

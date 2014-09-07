@@ -29,4 +29,14 @@ public class RepositoryConstants {
             "ON NEWS.NEWS_ID = NEWS_AUTHOR.NEWS " +
             "WHERE NEWS_AUTHOR.AUTHOR = :id";
 
+    public static final String TAGS_BY_NEWS_ID =
+            "SELECT TAG.TAG_ID, TAG.TAG_NAME FROM TAG " +
+            "JOIN NEWS_TAG ON TAG.TAG_ID = NEWS_TAG.TAG " +
+            "WHERE NEWS_TAG.NEWS = :id";
+
+    public static final String AUTHORS_BY_NEWS_ID =
+            "SELECT AUTHOR.AUTHOR_ID, AUTHOR.AUTHOR_NAME FROM AUTHOR " +
+            "JOIN NEWS_AUTHOR ON AUTHOR.AUTHOR_ID = NEWS_AUTHOR.AUTHOR " +
+            "WHERE NEWS_AUTHOR.NEWS = :id";
+
 }

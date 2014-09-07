@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.Consumes;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/author")
@@ -18,8 +19,8 @@ public class AuthorAPI {
     private AuthorService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public Iterable<Author> showAllAuthors(){
-        return service.getAllAuthors();
+    public List showAllAuthors(@RequestParam(value = "newsId", required = false) Long id){
+        return service.getAllAuthors(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)

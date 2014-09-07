@@ -33,7 +33,7 @@ function loadAllNews() {
 }
 
 function loadNewsPage(page){
-    var size = 1;
+    var size = 5;
     $.ajax({
         type: "GET",
         url: "http://localhost:8080/news-management-orm/api/news/page?page=" + page + "&size=" + size,
@@ -213,18 +213,7 @@ function loadNewsForView() {
             $("#article-description").text(data["shortText"]);
             $("#article-text").text(data["fullText"]);
             addIdToHref($("#sidebar"), ["#article-edit", "#article-delete"], data["id"]);
-            $.each(data["tags"], function(key, value){
-                var tagSpan = $("#tags-span").clone();
-                tagSpan.text(value["name"]);
-                tagSpan.attr("id", tagSpan.attr("id") + value["id"]);
-                tagSpan.removeAttr("hidden");
-                var tagsBlock = $("#tags-block");
-                tagsBlock.append(tagSpan);
-                if (key != data["tags"].length - 1){
-                    var span = $('<span />').html(', ');
-                    tagsBlock.append(span);
-                }
-            });
+            loadNewsTagsForView(data["id"]);
             $(document).find("#article-delete").click(function(event){
                 deleteArticle(event, this);
             });
@@ -232,6 +221,28 @@ function loadNewsForView() {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             $("#article-title").text(jqXHR.status + " - " + errorThrown);
+        },
+        dataType: "json"
+    });
+}
+
+function loadNewsTagsForView(newsId){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/tag?newsId=" + newsId,
+        success: function(data){
+            $.each(data, function(key, value){
+                var tagSpan = $("#tags-span").clone();
+                tagSpan.text(value["name"]);
+                tagSpan.attr("id", tagSpan.attr("id") + value["id"]);
+                tagSpan.removeAttr("hidden");
+                var tagsBlock = $("#tags-block");
+                tagsBlock.append(tagSpan);
+                if (key != data.length - 1){
+                    var span = $('<span />').html(', ');
+                    tagsBlock.append(span);
+                }
+            });
         },
         dataType: "json"
     });
@@ -320,22 +331,8 @@ function loadNewsForEdit() {
             $(document).find("#article-delete").click(function(event){
                 deleteArticle(event, this);
             });
-            $.each(data["tags"], function(key, value){
-                var val = $(document).find("#listTags").val();
-                if (key == 0) {
-                    $(document).find("#listTags").val(value["name"]);
-                } else if (data["tags"].length != (key - 1)){
-                    $(document).find("#listTags").val(val + ", " + value["name"]);
-                }
-            });
-            $.each(data["authors"], function(key, value){
-                var val = $(document).find("#listAuthors").val();
-                if (key == 0) {
-                    $(document).find("#listAuthors").val(value["name"]);
-                } else if (data["authors"].length != (key - 1)){
-                    $(document).find("#listAuthors").val(val + ", " + value["name"]);
-                }
-            });
+            loadNewsTagsForEdit(data["id"]);
+            loadNewsAuthorsForEdit(data["id"]);
             editingArticle();
             warningsBehavior(data);
         },
@@ -343,6 +340,42 @@ function loadNewsForEdit() {
             $("#edit-form").css("display", "none");
             $("#article-block").append("<div class='col-md-9'><h3 id='article-title'></h3></div>");
             $("#article-title").text(jqXHR.status + " - " + errorThrown);
+        },
+        dataType: "json"
+    });
+}
+
+function loadNewsTagsForEdit(newsId){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/tag?newsId=" + newsId,
+        success: function (data) {
+            $.each(data, function(key, value){
+                var val = $(document).find("#listTags").val();
+                if (key == 0) {
+                    $(document).find("#listTags").val(value["name"]);
+                } else if (data.length != (key - 1)){
+                    $(document).find("#listTags").val(val + ", " + value["name"]);
+                }
+            });
+        },
+        dataType: "json"
+    });
+}
+
+function loadNewsAuthorsForEdit(newsId){
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/news-management-orm/api/author?newsId=" + newsId,
+        success: function (data) {
+            $.each(data, function(key, value){
+                var val = $(document).find("#listAuthors").val();
+                if (key == 0) {
+                    $(document).find("#listAuthors").val(value["name"]);
+                } else if (data.length != (key - 1)){
+                    $(document).find("#listAuthors").val(val + ", " + value["name"]);
+                }
+            });
         },
         dataType: "json"
     });
@@ -404,13 +437,14 @@ function addingArticle(){
         event.preventDefault();
         var article = new Object();
         article.title = $(document).find("#inputTitle").val();
-        article.description = $(document).find("#inputShort").val();
-        article.text = $(document).find("#inputLong").val();
+        article.shortText = $(document).find("#inputShort").val();
+        article.fullText = $(document).find("#inputLong").val();
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/news-management-orm/api/add",
+            url: "http://localhost:8080/news-management-orm/api/news",
             contentType : 'application/json; charset=utf-8',
-            data: JSON.stringify(article)
+            data: JSON.stringify(article),
+            dataType: "json"
         }).done(function(data){
             if(data["status"] === false) {
                 setErrors(data);

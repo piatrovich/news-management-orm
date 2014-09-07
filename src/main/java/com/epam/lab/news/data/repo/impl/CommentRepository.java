@@ -20,29 +20,29 @@ public class CommentRepository implements ICommentRepository {
     SessionFactory sessionFactory;
 
     @Override
-    public List<Comment> all() {
-        Session session = sessionFactory.openSession();
+    public List<Comment> all(Long...params) {
+        Session session = sessionFactory.getCurrentSession();
         List<Comment> comments = session.createCriteria(Comment.class).list();
-        session.close();
+        //session.close();
         return comments;
     }
 
     public List<Comment> findByNewsId(Long id){
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<Comment> comments = session.createCriteria(Comment.class)
                 .add(Restrictions.eq("news_news_id", id)).list();
-        session.close();
+        //session.close();
         return comments;
     }
 
     @Override
     public Long getCountByNewsId(Long newsId) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Long count = (Long) session.createCriteria(Comment.class)
                 .add(Restrictions.eq("news.id", newsId))
                 .setProjection(Projections.rowCount())
                 .uniqueResult();
-        session.close();
+        //session.close();
         return count;
     }
 
@@ -53,7 +53,7 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public Comment save(Comment entity) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -63,20 +63,18 @@ public class CommentRepository implements ICommentRepository {
             if (transaction != null)
                 transaction.rollback();
         } finally {
-            session.close();
+            //session.close();
         }
         return entity;
     }
 
     @Override
     public Long count() {
-        Session session = sessionFactory.openSession();
-        Long count = (Long) session.createCriteria(Comment.class)
+        Session session = sessionFactory.getCurrentSession();
+        return (Long) session.createCriteria(Comment.class)
                 .setProjection(Projections
                         .rowCount())
                 .uniqueResult();
-        session.close();
-        return count;
     }
 
     @Override
@@ -91,7 +89,7 @@ public class CommentRepository implements ICommentRepository {
 
     @Override
     public List<Comment> page(Page page, Long...params) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<Comment> comments = null;
         if(params.length < 1) {
             comments = session.createCriteria(Comment.class)
@@ -103,7 +101,6 @@ public class CommentRepository implements ICommentRepository {
                     .setFirstResult((int) ((page.getCurrent() - 1) * page.getSize()))
                     .setMaxResults(page.getSize().intValue()).list();
         }
-        session.close();
         return comments;
     }
 

@@ -6,15 +6,21 @@ import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
 import com.epam.lab.news.data.repo.impl.NewsRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class NewsService {
     @Autowired
     @Qualifier("NewsRepository")
@@ -28,6 +34,11 @@ public class NewsService {
         return (News) repository.one(id);
     }
 
+    public MappedBean saveNews(News news){
+        news.setCreationDate(new Date());
+        return repository.save(news);
+    }
+
     public Long getTotalNewsCount(){
         return repository.count();
     }
@@ -38,13 +49,23 @@ public class NewsService {
         if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
             newses = repository.page(page);
         }
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(page));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
         return new ResponsePage<MappedBean>(newses, page);
     }
 
+    @Transactional(readOnly = false)
     public void addTag(Long id, Tag tag){
         News news = (News) repository.one(id);
         if (news != null) {
-            news.getTags().add(tag);
+            Hibernate.initialize(news);
+            Hibernate.initialize(news.getTags().add(tag));
+
+            //news.getTags().add(tag);
         }
         repository.save(news);
     }

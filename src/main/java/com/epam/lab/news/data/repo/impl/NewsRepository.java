@@ -20,50 +20,45 @@ public class NewsRepository extends BasePagingRepositoryImpl implements INewsRep
 
     @Override
     public List<MappedBean> mostCommented(Long count) {
-        Session session = sessionFactory.openSession();
-        Query query = session.createSQLQuery(RepositoryConstants.MOST_COMMENTED).addEntity(bean.getClass());
-        List<MappedBean> beans = query.list();
-        session.close();
-        return beans;
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createSQLQuery(RepositoryConstants.MOST_COMMENTED)
+                .addEntity(bean.getClass());
+        return query.list();
     }
 
     @Override
     public Integer countByTag(Long id) {
-        Session session = sessionFactory.openSession();
-        Query query = session.createSQLQuery(RepositoryConstants.COUNT_BY_TAG).setParameter("id", id);
-        Integer counter = ((BigDecimal)query.list().get(0)).intValue();
-        session.close();
-        return counter;
+        Session session = sessionFactory.getCurrentSession();
+        Query query = session.createSQLQuery(RepositoryConstants.COUNT_BY_TAG)
+                .setParameter("id", id);
+        return ((BigDecimal)query.list().get(0)).intValue();
     }
 
     @Override
     public List<MappedBean> newsByTag(Long id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<MappedBean> newses = session.createSQLQuery(RepositoryConstants.NEWS_BY_TAG)
                 .addEntity(bean.getClass())
                 .setParameter("id", id)
                 .list();
-        session.close();
         return newses;
     }
 
     @Override
     public Integer countByAuthor(Long id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Query query = session.createSQLQuery(RepositoryConstants.COUNT_BY_AUTHOR).setParameter("id", id);
         Integer counter = ((BigDecimal)query.list().get(0)).intValue();
-        session.close();
         return counter;
     }
 
     @Override
     public List<MappedBean> newsByAuthor(Long id) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<MappedBean> newses = session.createSQLQuery(RepositoryConstants.NEWS_BY_AUTHOR)
                 .addEntity(bean.getClass())
                 .setParameter("id", id)
                 .list();
-        session.close();
         return newses;
     }
 }

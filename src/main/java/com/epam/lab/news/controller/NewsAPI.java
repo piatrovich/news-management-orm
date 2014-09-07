@@ -37,7 +37,13 @@ public class NewsAPI {
 
     @RequestMapping(method = RequestMethod.POST)
     public void save(@RequestBody News news){
-        //service.save(news);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(news));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        service.saveNews(news);
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)

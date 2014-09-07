@@ -23,26 +23,20 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
     }
 
     @Override
-    public List<MappedBean> all() {
-        Session session = sessionFactory.openSession();
-        try {
-            return session.createCriteria(bean.getClass()).list();
-        } finally {
-            session.close();
-        }
+    public List<MappedBean> all(Long...params) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(bean.getClass()).list();
     }
 
     @Override
     public MappedBean one(Long id) {
-        Session session = sessionFactory.openSession();
-        MappedBean entity =  (MappedBean) session.get(bean.getClass(), id);
-        session.close();
-        return entity;
+        Session session = sessionFactory.getCurrentSession();
+        return (MappedBean) session.get(bean.getClass(), id);
     }
 
     @Override
     public MappedBean save(MappedBean entity) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -51,26 +45,23 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
         } catch (Exception e){
             if (transaction != null)
                 transaction.rollback();
-        } finally {
-            session.close();
         }
         return entity;
     }
 
     @Override
     public Long count() {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Long count = (Long) session.createCriteria(bean.getClass())
                 .setProjection(Projections
                         .rowCount())
                 .uniqueResult();
-        session.close();
         return count;
     }
 
     @Override
     public void delete(MappedBean entity) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
@@ -79,8 +70,6 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
         } catch (Exception e){
             if (transaction != null)
                 transaction.rollback();
-        } finally {
-            session.close();
         }
     }
 

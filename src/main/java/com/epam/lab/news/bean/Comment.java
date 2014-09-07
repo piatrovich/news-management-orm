@@ -20,7 +20,7 @@ public class Comment {
     @Column(name = "creation_date")
     private Date creationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "NEWS_news_id")
     @JsonIgnore
     private News news;

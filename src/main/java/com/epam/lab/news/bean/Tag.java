@@ -10,8 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "TAG")
-public class Tag extends MappedBean /*implements Serializable*/ {
-    /*private static final long serialVersionUID = 1L;*/
+public class Tag extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "TAG_SEQUENCE")
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequence")
@@ -21,10 +20,9 @@ public class Tag extends MappedBean /*implements Serializable*/ {
     @Column(name = "TAG_NAME", nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinColumn(name = "news_id")
+    @ManyToMany(mappedBy = "tags")
     @JsonIgnore
-    private List<News> newses;
+    private Set<News> newses;
 
     public Long getId() {
         return id;
@@ -77,11 +75,11 @@ public class Tag extends MappedBean /*implements Serializable*/ {
                 .toString();
     }
 
-    public List<News> getNewses() {
+    public Set<News> getNewses() {
         return newses;
     }
 
-    public void setNewses(List<News> newses) {
+    public void setNewses(Set<News> newses) {
         this.newses = newses;
     }
 }

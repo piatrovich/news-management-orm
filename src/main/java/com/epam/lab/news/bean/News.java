@@ -32,21 +32,23 @@ public class News extends MappedBean {
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @OneToMany(mappedBy = "news")
-    @JsonIgnore
-    private List<Comment> comments;
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "NEWS_TAG",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "TAG")})
+    @JsonIgnore
     private Set<Tag> tags;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "NEWS_AUTHOR",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR")})
+    @JsonIgnore
     private Set<Author> authors;
+
+    @OneToMany(mappedBy = "news")
+    @JsonIgnore
+    private List<Comment> comments;
 
     public Long getId() {
         return id;

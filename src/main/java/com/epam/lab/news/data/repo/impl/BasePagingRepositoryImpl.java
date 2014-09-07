@@ -17,11 +17,10 @@ public class BasePagingRepositoryImpl extends BaseCRUDRepositoryImpl
 
     @Override
     public List<MappedBean> page(Page page, Long... params) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<MappedBean> entities = session.createCriteria(bean.getClass())
                 .setFirstResult((int)((page.getCurrent() - 1) * page.getSize()))
                 .setMaxResults(page.getSize().intValue()).list();
-        session.close();
         return entities;
     }
 
