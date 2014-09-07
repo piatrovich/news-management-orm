@@ -286,6 +286,10 @@ function loadCommentPage(page){
                 $(block).find(".comment-text").text(value["text"]);
                 //$(block).find(".author").text(value[""])
                 $(block).attr("id", $(block).attr("id") + value["id"]);
+                $(block).find(".comment-delete").click(function(event){
+                    event.preventDefault();
+                    deleteComment(value["id"]);
+                });
                 $(document).find("#comments-block").append(block);
             });
             $(document).find("#total-pages-count").val(data["page"]["total"]);
@@ -302,6 +306,19 @@ function addComment(comment){
         url: "http://localhost:8080/news-management-orm/api/comment/" + getIDFromCurrentPageUrl(),
         contentType : 'application/json; charset=utf-8',
         data: JSON.stringify(comment)
+    });
+}
+
+function deleteComment(commentId){
+    alert(commentId);
+    $.ajax({
+        type: "DELETE",
+        url:"http://localhost:8080/news-management-orm/api/comment/" + commentId,
+        success: function(data){
+            deleteCommentsFromPage();
+            loadComments();
+        },
+        dataType: "json"
     });
 }
 
