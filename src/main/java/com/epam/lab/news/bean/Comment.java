@@ -25,34 +25,74 @@ public class Comment extends MappedBean {
     @JsonIgnore
     private News news;
 
+    /**
+     * Getter for id
+     *
+     * @return Comment id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Setter for id
+     *
+     * @param id Comment id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Getter for comment text
+     *
+     * @return Comment text
+     */
     public String getText() {
         return text;
     }
 
+    /**
+     * Setter for comment text
+     *
+     * @param text Comment text
+     */
     public void setText(String text) {
         this.text = text;
     }
 
+    /**
+     * Getter for comment creation date
+     *
+     * @return Comment creation date
+     */
     public Date getCreationDate() {
         return creationDate;
     }
 
+    /**
+     * Setter for comment creation date
+     *
+     * @param creationDate Comment creation date
+     */
     public void setCreationDate(Date creationDate) {
         this.creationDate = creationDate;
     }
 
+    /**
+     * Setter for news
+     *
+     * @param news News
+     */
     public void setNews(News news) {
         this.news = news;
     }
 
+    /**
+     * Getter for news
+     *
+     * @return News
+     */
     public News getNews() {
         return news;
     }
