@@ -4,22 +4,26 @@ import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.BasePagingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @SuppressWarnings("unchecked")
+@Transactional(propagation = Propagation.REQUIRED)
 public class TagService {
     @Autowired
     @Qualifier("TagRepository")
-    BasePagingAndSortingRepositoryImpl repository;
+    TagRepository repository;
 
-    public List all(){
-        return repository.all();
+    public List all(Long...params){
+        return repository.all(params);
     }
 
     public Tag get(Long id){
@@ -52,6 +56,10 @@ public class TagService {
 
     public Boolean exists(Long id){
         return repository.exists(id);
+    }
+
+    public Boolean existsByName(String name){
+        return repository.existByName(name);
     }
 
 }

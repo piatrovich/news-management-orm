@@ -19,8 +19,8 @@ public class TagAPI {
     TagService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public List tags(){
-        return service.all();
+    public List tags(@RequestParam(value = "newsId", required = false) Long id){
+        return service.all(id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -46,6 +46,11 @@ public class TagAPI {
     @RequestMapping(value = "/exists/{id}", method = RequestMethod.GET)
     public boolean exists(@PathVariable Long id){
         return service.exists(id);
+    }
+
+    @RequestMapping(value = "/existsByName", method = RequestMethod.GET)
+    public Boolean existsByName(@RequestParam("name") String name){
+        return service.existsByName(name);
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)

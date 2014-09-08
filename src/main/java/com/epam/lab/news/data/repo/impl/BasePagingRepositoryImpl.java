@@ -2,26 +2,25 @@ package com.epam.lab.news.data.repo.impl;
 
 import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.bean.Page;
-import com.epam.lab.news.data.repo.PagingAndSortingRepository;
+import com.epam.lab.news.data.repo.PagingRepository;
 import org.hibernate.Session;
 
 import java.util.List;
 
 @SuppressWarnings("unchecked")
-public class BasePagingAndSortingRepositoryImpl extends BaseCRUDRepositoryImpl
-        implements PagingAndSortingRepository<MappedBean> {
+public class BasePagingRepositoryImpl extends BaseCRUDRepositoryImpl
+        implements PagingRepository<MappedBean> {
 
-    public BasePagingAndSortingRepositoryImpl(MappedBean bean){
+    public BasePagingRepositoryImpl(MappedBean bean){
         super(bean);
     }
 
     @Override
     public List<MappedBean> page(Page page, Long... params) {
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         List<MappedBean> entities = session.createCriteria(bean.getClass())
                 .setFirstResult((int)((page.getCurrent() - 1) * page.getSize()))
                 .setMaxResults(page.getSize().intValue()).list();
-        session.close();
         return entities;
     }
 

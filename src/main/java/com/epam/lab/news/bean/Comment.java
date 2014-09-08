@@ -7,10 +7,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "COMMENTS")
-public class Comment {
+public class Comment extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "COMMENTS_SEQUENCE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequence")
     @Column(name = "comment_id")
     private Long id;
 
@@ -20,7 +20,7 @@ public class Comment {
     @Column(name = "creation_date")
     private Date creationDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "NEWS_news_id")
     @JsonIgnore
     private News news;
@@ -49,19 +49,12 @@ public class Comment {
         this.creationDate = creationDate;
     }
 
-    /*public Long getNews() {
-        return news;
-    }
-
-    public void setNews(Long news) {
+    public void setNews(News news) {
         this.news = news;
-    }*/
+    }
 
     public News getNews() {
         return news;
     }
 
-    public void setNews(News news) {
-        this.news = news;
-    }
 }

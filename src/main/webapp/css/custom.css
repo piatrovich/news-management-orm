@@ -45,9 +45,9 @@ span.glyphicon-circle-arrow-right, span.glyphicon-circle-arrow-left {
     font-size: 1.7em;
 }
 
-span.badge {
+span.small-badge {
     vertical-align: 22%;
-    font-size: 1.5em;
+    font-size: 1.0em;
 }
 
 #add-comment-btn {
@@ -75,14 +75,16 @@ span.badge {
     padding-bottom: 2.2em;
 }
 
-.newItem {
-    width: 100px;
-}
-
 .new-item-form {
-    padding-bottom: 2.2em;
+    padding-bottom: 3.2em;
+    padding-right: 0;
 }
 
 .item-input {
-    padding-left: 0;
+    padding: 0 0;
+}
+
+span.big-badge {
+    vertical-align: 22%;
+    font-size: 1.5em;
 }

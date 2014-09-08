@@ -6,18 +6,22 @@ import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.impl.BasePagingAndSortingRepositoryImpl;
+import com.epam.lab.news.data.repo.impl.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class NewsService {
     @Autowired
     @Qualifier("NewsRepository")
-    BasePagingAndSortingRepositoryImpl repository;
+    NewsRepository repository;
 
     public List getAll(){
         return repository.all();
@@ -25,6 +29,23 @@ public class NewsService {
 
     public News getSingle(Long id){
         return (News) repository.one(id);
+    }
+
+    public MappedBean saveNews(News news){
+        news.setCreationDate(new Date());
+        return repository.save(news);
+    }
+
+    public MappedBean updateNews(News news){
+        News old = (News) repository.one(news.getId());
+        if (old != null){
+            old.setTitle(news.getTitle());
+            old.setShortText(news.getShortText());
+            old.setFullText(news.getFullText());
+            news.setModificationDate(new Date());
+            return repository.save(old);
+        }
+        return news;
     }
 
     public Long getTotalNewsCount(){
@@ -57,10 +78,30 @@ public class NewsService {
     }
 
     public void deleteNews(Long id){
-        News news = (News) repository.one(id);
+        MappedBean news = (News) repository.one(id);
         if (news != null) {
             repository.delete(news);
         }
+    }
+
+    public List getMostCommented(Long count){
+        return repository.mostCommented(count);
+    }
+
+    public Integer getCountByTag(Long id){
+        return repository.countByTag(id);
+    }
+
+    public List<MappedBean> newsByTag(Long id){
+        return repository.newsByTag(id);
+    }
+
+    public Integer getCountByAuthor(Long id){
+        return repository.countByAuthor(id);
+    }
+
+    public List<MappedBean> newsByAuthor(Long id){
+        return repository.newsByAuthor(id);
     }
 
 }

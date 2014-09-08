@@ -5,7 +5,7 @@ package com.epam.lab.news.exception.bean;
  *
  * @author Dzmitry Piatrovich
  */
-public class DAOException extends ServiceException {
+public class RepositoryException extends ServiceException {
 
     /**
      * Constructor
@@ -13,7 +13,7 @@ public class DAOException extends ServiceException {
      * @param message Message from DAO layer
      * @param cause Bottom layer exception
      */
-    public DAOException(String message, Throwable cause) {
+    public RepositoryException(String message, Throwable cause) {
         super(message, cause);
     }
 

@@ -1,9 +1,12 @@
 package com.epam.lab.news.controller;
 
 import com.epam.lab.news.bean.Comment;
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.service.CommentService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,9 +25,14 @@ public class CommentAPI {
         return service.getAll();
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public MappedBean getOne(@PathVariable("id") Long id){
+        return service.one(id);
+    }
+
     @RequestMapping(value = "/count", method = RequestMethod.GET)
-    public Long showCount(){
-        return service.getCount();
+    public Long showCount(@RequestParam(value = "newsId", required = false) Long id){
+        return service.getCount(id);
     }
 
     @RequestMapping(value = "/byNews/{id}", method = RequestMethod.GET)
@@ -34,21 +42,26 @@ public class CommentAPI {
 
     @RequestMapping(value = "/page/count", method = RequestMethod.GET)
     public Long showPageCount(@RequestParam(value = "size") Long size,
-                              @RequestParam(value = "newsId") Long newsId){
-        return service.getPageCountByNewsId(size, newsId);
+                              @RequestParam(value = "newsId", required = false) Long newsId){
+        return service.getPageCount(size, newsId);
     }
 
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    public ResponsePage<Comment> showPage(@RequestParam(value = "size") Long size,
+    public ResponsePage<MappedBean> showPage(@RequestParam(value = "size") Long size,
                                           @RequestParam(value = "page") Long page,
-                                          @RequestParam(value = "newsId") Long newsId){
-        return service.getPage(new Page(page, size), newsId);
+                                          @RequestParam(value = "newsId", required = false) Long id){
+        return service.getPage(new Page(page, size), id);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-    public void addComment(@PathVariable Long id,
+    public MappedBean addComment(@PathVariable Long id,
                            @RequestBody Comment comment){
-        service.saveComment(comment, id);
+        return service.saveComment(comment, id);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteComment(@PathVariable("id") Long id){
+        service.deleteComment(id);
     }
 
 }

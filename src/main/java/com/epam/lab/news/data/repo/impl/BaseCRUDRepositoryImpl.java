@@ -3,12 +3,15 @@ package com.epam.lab.news.data.repo.impl;
 import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.repo.CRUDRepository;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -23,65 +26,38 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
     }
 
     @Override
-    public List<MappedBean> all() {
-        Session session = sessionFactory.openSession();
-        try {
-            return session.createCriteria(bean.getClass()).list();
-        } finally {
-            session.close();
-        }
+    public List<MappedBean> all(Long...params) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(bean.getClass()).list();
     }
 
     @Override
     public MappedBean one(Long id) {
-        Session session = sessionFactory.openSession();
-        MappedBean entity =  (MappedBean) session.get(bean.getClass(), id);
-        session.close();
-        return entity;
+        Session session = sessionFactory.getCurrentSession();
+        return (MappedBean) session.get(bean.getClass(), id);
     }
 
     @Override
     public MappedBean save(MappedBean entity) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.saveOrUpdate(entity);
-            transaction.commit();
-        } catch (Exception e){
-            if (transaction != null)
-                transaction.rollback();
-        } finally {
-            session.close();
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.saveOrUpdate(entity);
         return entity;
     }
 
     @Override
-    public Long count() {
-        Session session = sessionFactory.openSession();
+    public Long count(Long...params) {
+        Session session = sessionFactory.getCurrentSession();
         Long count = (Long) session.createCriteria(bean.getClass())
                 .setProjection(Projections
                         .rowCount())
                 .uniqueResult();
-        session.close();
         return count;
     }
 
     @Override
     public void delete(MappedBean entity) {
-        Session session = sessionFactory.openSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            session.delete(entity);
-            transaction.commit();
-        } catch (Exception e){
-            if (transaction != null)
-                transaction.rollback();
-        } finally {
-            session.close();
-        }
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(entity);
     }
 
     @Override

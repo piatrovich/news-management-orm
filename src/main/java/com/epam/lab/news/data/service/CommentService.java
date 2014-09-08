@@ -1,37 +1,45 @@
 package com.epam.lab.news.data.service;
 
 import com.epam.lab.news.bean.Comment;
+import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.bean.News;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.ICommentRepository;
+import com.epam.lab.news.data.repo.impl.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
 @Service
+@Transactional(propagation = Propagation.REQUIRED)
 public class CommentService {
     @Autowired
-    @Qualifier("commentRepository")
-    ICommentRepository repository;
+    @Qualifier("CommentRepository")
+    CommentRepository repository;
 
     public List getAll(){
         return repository.all();
     }
 
-    public Long getCount(){
-        return repository.count();
+    public MappedBean one(Long id){
+        return repository.one(id);
+    }
+
+    public Long getCount(Long...params){
+        return repository.count(params);
     }
 
     public List getByNewsId(Long id){
-        return repository.findByNewsId(id);
+        return repository.all(id);
     }
 
-    public Long getPageCountByNewsId(Long pageSize, Long newsId){
-        Long total = repository.getCountByNewsId(newsId);
+    public Long getPageCount(Long pageSize, Long...params){
+        Long total = repository.count(params);
         if (pageSize != 0L){
             Long count = total / pageSize;
             return total % pageSize > 0 ? ++count : count;
@@ -40,21 +48,24 @@ public class CommentService {
         }
     }
 
-    public void saveComment(Comment comment, Long newsId){
+    public MappedBean saveComment(Comment comment, Long newsId){
         News news = new News();
         news.setId(newsId);
         comment.setNews(news);
         comment.setCreationDate(new Date());
-        repository.save(comment);
+        return repository.save(comment);
     }
 
-    public ResponsePage<Comment> getPage(Page page, Long...args){
-        page.setTotal(repository.pageCount(page.getSize()));
-        List<Comment> items = null;
-        if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
-            items = repository.page(page, args);
-        }
-        return new ResponsePage<Comment>(items, page);
+    public ResponsePage<MappedBean> getPage(Page page, Long...params){
+        page.setTotal(getPageCount(page.getSize(), params));
+        List<MappedBean> items = repository.page(page, params);
+        return new ResponsePage<MappedBean>(items, page);
+    }
+
+    public void deleteComment(Long id){
+        MappedBean comment = repository.one(id);
+        if (comment != null)
+            repository.delete(comment);
     }
 
 }

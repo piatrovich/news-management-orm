@@ -3,7 +3,7 @@ package com.epam.lab.news.bean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "AUTHOR")
@@ -17,10 +17,9 @@ public class Author extends MappedBean {
     @Column(name = "AUTHOR_NAME", nullable = false)
     private String name;
 
-    @ManyToMany
-    @JoinColumn(name = "news_id")
+    @ManyToMany(mappedBy = "authors")
     @JsonIgnore
-    private List<News> newses;
+    private Set<News> newses;
 
     public Long getId() {
         return id;
@@ -38,11 +37,11 @@ public class Author extends MappedBean {
         this.name = name;
     }
 
-    public List<News> getNewses() {
+    public Set<News> getNewses() {
         return newses;
     }
 
-    public void setNewses(List<News> newses) {
+    public void setNewses(Set<News> newses) {
         this.newses = newses;
     }
 }

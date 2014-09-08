@@ -49,7 +49,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTags">Tags</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTags">
+                                <spring:message code="label.tags"/>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -61,11 +63,13 @@
                             </span>
                             <div class="list-group-item new-item-form">
                                 <div id="new-tag">
-                                    <div class="col-md-8 item-input">
-                                        <input class="newItem" placeholder="new tag">
+                                    <div class="col-md-7 item-input">
+                                        <input class="newItem form-control" placeholder="<spring:message code="menu.new.item"/>">
                                     </div>
-                                    <div class="col-md-4">
-                                        <button id="add-tag-btn">Add</button>
+                                    <div class="col-md-5">
+                                        <button class="btn-default btn" id="add-tag-btn">
+                                            <spring:message code="menu.new.item.btn"/>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -76,7 +80,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <span id="current-tag-page-badge" class="badge">0</span>
+                                    <span id="current-tag-page-badge" class="badge big-badge">0</span>
                                 </div>
                                 <div class="col-md-4" id="next-tag-page">
                                     <a>
@@ -90,7 +94,9 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseAuthors">Authors</a>
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseAuthors">
+                                <spring:message code="label.authors"/>
+                            </a>
                         </h4>
                     </div>
                 </div>
@@ -102,11 +108,13 @@
                             </span>
                             <div class="list-group-item new-item-form">
                                 <div id="new-author">
-                                    <div class="col-md-8 item-input">
-                                        <input class="newAuthor" placeholder="new author">
+                                    <div class="col-md-7 item-input">
+                                        <input class="newAuthor form-control" placeholder="<spring:message code="menu.new.item"/>">
                                     </div>
                                     <div class="col-md-4">
-                                        <button id="add-author-btn">Add</button>
+                                        <button class="btn-default btn" id="add-author-btn">
+                                            <spring:message code="menu.new.item.btn"/>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +125,7 @@
                                     </a>
                                 </div>
                                 <div class="col-md-4">
-                                    <span id="current-author-page-badge" class="badge">0</span>
+                                    <span id="current-author-page-badge" class="badge big-badge">0</span>
                                 </div>
                                 <div class="col-md-4" id="next-author-page">
                                     <a>
@@ -131,7 +139,9 @@
             </div>
 
             <div class="list-group">
-                <a id="show-comments" href="" class="list-group-item">View comments</a>
+                <a id="show-comments" href="" class="list-group-item">
+                    <spring:message code="menu.show.comments"/>
+                </a>
             </div>
 
         </div>
@@ -176,7 +186,7 @@
                     </div>
                     <div class="form-group">
                         <label for="listTags" class="col-md-3 control-label">
-                            Tags:
+                            <spring:message code="label.tags"/>:
                         </label>
                         <div class="col-md-9">
                             <textarea class="form-control" rows="2" id="listTags" disabled="disabled"></textarea>
@@ -187,7 +197,7 @@
                     </div>
                     <div class="form-group">
                         <label for="listAuthors" class="col-md-3 control-label">
-                            Authors:
+                            <spring:message code="label.authors"/>:
                         </label>
                         <div class="col-md-9">
                             <textarea class="form-control" rows="2" id="listAuthors" disabled="disabled"></textarea>
@@ -221,7 +231,7 @@
                         <a id="previous-comment-page" href="">
                             <span class="glyphicon glyphicon-circle-arrow-left"></span>
                         </a>
-                        <span id="current-comment-page-badge" class="badge">1</span>
+                        <span id="current-comment-page-badge" class="badge big-badge">1</span>
                         <a id="next-comment-page" href="">
                             <span class="glyphicon glyphicon-circle-arrow-right"></span>
                         </a>

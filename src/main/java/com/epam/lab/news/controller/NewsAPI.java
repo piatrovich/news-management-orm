@@ -6,28 +6,28 @@ import com.epam.lab.news.bean.News;
 import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
-import com.epam.lab.news.data.repo.CRUDRepository;
 import com.epam.lab.news.data.service.NewsService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import oracle.jdbc.pool.OracleDataSource;
+import com.epam.lab.news.validation.ArticleValidator;
+import com.epam.lab.news.validation.ValidationResult;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sql.DataSource;
 import javax.ws.rs.Consumes;
-import java.sql.Connection;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/news")
 @Consumes("application/json")
 public class NewsAPI {
+    private Logger logger = Logger.getLogger("errors");
+
     @Autowired
     NewsService service;
+
+    /** Wiring validator for articles */
+    @Autowired
+    ArticleValidator validator;
 
     @RequestMapping(method = RequestMethod.GET)
     public List news(){
@@ -35,8 +35,21 @@ public class NewsAPI {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public void save(@RequestBody News news){
-        //service.save(news);
+    public @ResponseBody ValidationResult save(@RequestBody News news){
+        ValidationResult result = validator.validate(news);
+        if (result.isStatus()){
+            service.saveNews(news);
+        }
+        return result;
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public @ResponseBody ValidationResult update(@RequestBody News news){
+        ValidationResult result = validator.validate(news);
+        if (result.isStatus()){
+            service.updateNews(news);
+        }
+        return result;
     }
 
     @RequestMapping(value = "/count", method = RequestMethod.GET)
@@ -69,6 +82,31 @@ public class NewsAPI {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public void deleteNews(@PathVariable Long id){
         service.deleteNews(id);
+    }
+
+    @RequestMapping(value = "/top/{id}", method = RequestMethod.GET)
+    public List mostCommented(@PathVariable("id") Long id){
+        return service.getMostCommented(id);
+    }
+
+    @RequestMapping(value = "/countByTag", method = RequestMethod.GET)
+    public Integer countByTag(@RequestParam("tagId") Long id){
+        return service.getCountByTag(id);
+    }
+
+    @RequestMapping(value = "/newsByTag", method = RequestMethod.GET)
+    public List<MappedBean> newsByTag(@RequestParam("tagId") Long id){
+        return service.newsByTag(id);
+    }
+
+    @RequestMapping(value = "/countByAuthor", method = RequestMethod.GET)
+    public Integer countByAuthor(@RequestParam("authorId") Long id){
+        return service.getCountByAuthor(id);
+    }
+
+    @RequestMapping(value = "/newsByAuthor", method = RequestMethod.GET)
+    public List<MappedBean> newsByAuthor(@RequestParam("authorId") Long id){
+        return service.newsByAuthor(id);
     }
 
 }

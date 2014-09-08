@@ -1,19 +1,22 @@
 package com.epam.lab.news.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 @Table(name = "NEWS")
 public class News extends MappedBean {
     @Id
     @SequenceGenerator(name = "sequence", sequenceName = "NEWS_SEQUENCE")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequence")
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "sequence")
     @Column(name = "news_id")
     private Long id;
 
@@ -32,21 +35,27 @@ public class News extends MappedBean {
     @Column(name = "modification_date")
     private Date modificationDate;
 
-    @OneToMany(mappedBy = "news")
-    @JsonIgnore
-    private List<Comment> comments;
-
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
+    @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name = "NEWS_TAG",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "TAG")})
+    @JsonIgnore
     private Set<Tag> tags;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
+    @Cascade(CascadeType.SAVE_UPDATE)
     @JoinTable(name = "NEWS_AUTHOR",
             joinColumns = {@JoinColumn(name = "NEWS")},
             inverseJoinColumns = {@JoinColumn(name = "AUTHOR")})
+    @JsonIgnore
     private Set<Author> authors;
+
+    @OneToMany(orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "NEWS_NEWS_ID", updatable = false)
+    @JsonIgnore
+    private List<Comment> comments;
 
     public Long getId() {
         return id;
