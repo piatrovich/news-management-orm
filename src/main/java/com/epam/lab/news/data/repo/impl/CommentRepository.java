@@ -11,15 +11,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+/**
+ * Custom implementation of paging repository
+ */
 @SuppressWarnings("unchecked")
 public class CommentRepository extends BasePagingRepositoryImpl {
     @Autowired
     SessionFactory sessionFactory;
 
+    /**
+     * Constructor
+     *
+     * @param bean Bean for initializing
+     */
     public CommentRepository(MappedBean bean){
         super(bean);
     }
 
+    /**
+     * Returns comments for one news if param existing, otherwise calls base implementation
+     *
+     * @param params News id
+     * @return All comments for one news
+     */
     @Override
     public List<MappedBean> all(Long...params) {
         if (params.length > 0 && params[0]!= null){
@@ -32,6 +46,12 @@ public class CommentRepository extends BasePagingRepositoryImpl {
         }
     }
 
+    /**
+     * Returns comments count for one news if param existing, otherwise calls base implementation
+     *
+     * @param params News id
+     * @return Count
+     */
     @Override
     public Long count(Long...params) {
         if (params.length > 0 && params[0]!= null){
@@ -45,6 +65,13 @@ public class CommentRepository extends BasePagingRepositoryImpl {
         }
     }
 
+    /**
+     * Returns comments on page for one news if param existing, otherwise calls base implementation
+     *
+     * @param page Page
+     * @param params News id
+     * @return List of pages
+     */
     @Override
     public List<MappedBean> page(Page page, Long...params) {
         Session session = sessionFactory.getCurrentSession();
@@ -59,6 +86,14 @@ public class CommentRepository extends BasePagingRepositoryImpl {
         }
     }
 
+    /**
+     * Returns number of comment pages for one news if news id transfered in param, <br />
+     * otherwise calls base implementation
+     *
+     * @param pageSize Size of page
+     * @param params News id
+     * @return Number of pages
+     */
     @Override
     public Long pageCount(Long pageSize, Long...params) {
         Long count = 0L;

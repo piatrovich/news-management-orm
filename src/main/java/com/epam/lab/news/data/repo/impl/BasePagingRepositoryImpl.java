@@ -7,14 +7,29 @@ import org.hibernate.Session;
 
 import java.util.List;
 
+/**
+ * Base implementation of CRUD repository
+ */
 @SuppressWarnings("unchecked")
 public class BasePagingRepositoryImpl extends BaseCRUDRepositoryImpl
         implements PagingRepository<MappedBean> {
 
+    /**
+     * Constructor
+     *
+     * @param bean Bean for initializing
+     */
     public BasePagingRepositoryImpl(MappedBean bean){
         super(bean);
     }
 
+    /**
+     * Return list of items on page
+     *
+     * @param page Page
+     * @param params For custom implementations
+     * @return Entity list
+     */
     @Override
     public List<MappedBean> page(Page page, Long... params) {
         Session session = sessionFactory.getCurrentSession();
@@ -24,6 +39,13 @@ public class BasePagingRepositoryImpl extends BaseCRUDRepositoryImpl
         return entities;
     }
 
+    /**
+     * Number of all pages
+     *
+     * @param pageSize Size of page
+     * @param params For custom implementations
+     * @return Number of pages
+     */
     @Override
     public Long pageCount(Long pageSize, Long... params) {
         if (pageSize > 0L){

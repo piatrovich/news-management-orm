@@ -11,13 +11,27 @@ import org.hibernate.criterion.Restrictions;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * Implementation of news repository
+ */
 @SuppressWarnings("unchecked")
 public class NewsRepository extends BasePagingRepositoryImpl implements INewsRepository {
 
+    /**
+     * Constructor
+     *
+     * @param bean Any bean for initializing
+     */
     public NewsRepository(MappedBean bean){
         super(new News());
     }
 
+    /**
+     * Return list of most commented news
+     *
+     * @param count List size
+     * @return News list
+     */
     @Override
     public List<MappedBean> mostCommented(Long count) {
         Session session = sessionFactory.getCurrentSession();
@@ -26,6 +40,12 @@ public class NewsRepository extends BasePagingRepositoryImpl implements INewsRep
         return query.list();
     }
 
+    /**
+     * Returns number of news with particular tag
+     *
+     * @param id Tag id
+     * @return Number of news
+     */
     @Override
     public Integer countByTag(Long id) {
         Session session = sessionFactory.getCurrentSession();
@@ -34,6 +54,12 @@ public class NewsRepository extends BasePagingRepositoryImpl implements INewsRep
         return ((BigDecimal)query.list().get(0)).intValue();
     }
 
+    /**
+     * Returns list of news with particular tag
+     *
+     * @param id Tag id
+     * @return News list
+     */
     @Override
     public List<MappedBean> newsByTag(Long id) {
         Session session = sessionFactory.getCurrentSession();
@@ -44,6 +70,12 @@ public class NewsRepository extends BasePagingRepositoryImpl implements INewsRep
         return newses;
     }
 
+    /**
+     * Returns count of news with particular author
+     *
+     * @param id Author id
+     * @return News count
+     */
     @Override
     public Integer countByAuthor(Long id) {
         Session session = sessionFactory.getCurrentSession();
@@ -52,6 +84,12 @@ public class NewsRepository extends BasePagingRepositoryImpl implements INewsRep
         return counter;
     }
 
+    /**
+     * Returns list of news with particular author
+     *
+     * @param id Author id
+     * @return News list
+     */
     @Override
     public List<MappedBean> newsByAuthor(Long id) {
         Session session = sessionFactory.getCurrentSession();
