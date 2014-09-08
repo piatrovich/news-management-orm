@@ -18,6 +18,11 @@ import static org.hamcrest.core.Is.is;
 
 import java.util.List;
 
+/**
+ * Tests base paging repository implementation
+ *
+ * @author Dzmitry Piatrovich
+ */
 @RunWith(TestClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {ApplicationConfig.class})
@@ -26,15 +31,24 @@ public class AuthorRepositoryTest implements TestClassListener {
     @Qualifier("AuthorRepository")
     BasePagingRepositoryImpl repository;
 
+    /**
+     * For initializations before test
+     */
     @Override
     public void beforeClass() {}
 
+    /**
+     * Testing exists method
+     */
     @Test
     public void exists(){
         Assert.assertEquals(false, repository.exists(0L));
         Assert.assertEquals(true, repository.exists(1L));
     }
 
+    /**
+     * Testing save and delete methods
+     */
     @Test
     public void saveAndDelete(){
         Author mocked = new Author();
@@ -46,6 +60,9 @@ public class AuthorRepositoryTest implements TestClassListener {
         Assert.assertEquals(false, repository.exists(author.getId()));
     }
 
+    /**
+     * Testing all() and count() methods
+     */
     @Test
     public void allAndCount(){
         List authors = repository.all();
