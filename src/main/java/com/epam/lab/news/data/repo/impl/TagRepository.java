@@ -11,15 +11,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+/**
+ * Custom implementation for paging repository abstraction
+ */
 @SuppressWarnings("unchecked")
 public class TagRepository extends BasePagingRepositoryImpl {
     @Autowired
     protected SessionFactory sessionFactory;
 
+    /**
+     * Constructor
+     *
+     * @param bean Any Tag object
+     */
     public TagRepository(MappedBean bean){
         super(bean);
     }
 
+    /**
+     * Returns list of tags for news if news id transfered as params, <br />
+     * otherwise calls base implemenation
+     *
+     * @param params For custom implementations
+     * @return Tags list
+     */
     @Override
     public List<MappedBean> all(Long...params) {
         if (params.length > 0 && params[0] != null) {

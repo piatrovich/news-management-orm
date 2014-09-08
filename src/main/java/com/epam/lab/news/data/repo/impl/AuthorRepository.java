@@ -9,15 +9,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
+/**
+ * Custom implementation of paging repository for authors
+ */
 @SuppressWarnings("unchecked")
 public class AuthorRepository extends BasePagingRepositoryImpl {
     @Autowired
     protected SessionFactory sessionFactory;
 
+    /**
+     * Constructor
+     *
+     * @param bean Initializing by bean
+     */
     public AuthorRepository(MappedBean bean){
         super(bean);
     }
 
+    /**
+     * Custom implementation
+     *
+     * @param params If need to get author list for single news set a news ID
+     * @return List of authors
+     */
     @Override
     public List<MappedBean> all(Long... params) {
         if (params.length > 0 && params[0] != null) {
@@ -31,6 +45,12 @@ public class AuthorRepository extends BasePagingRepositoryImpl {
         }
     }
 
+    /**
+     * Checks tag existing
+     *
+     * @param name Tag name
+     * @return True if exists, otherwise false
+     */
     public boolean existByName(String name){
         Session session = sessionFactory.getCurrentSession();
         List<MappedBean> entities = session.createCriteria(bean.getClass())

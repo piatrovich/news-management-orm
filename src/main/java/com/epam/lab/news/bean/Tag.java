@@ -8,6 +8,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * Describes tag
+ */
 @Entity
 @Table(name = "TAG")
 public class Tag extends MappedBean {
@@ -24,22 +27,48 @@ public class Tag extends MappedBean {
     @JsonIgnore
     private Set<News> newses;
 
+    /**
+     * Getter of tag id
+     *
+     * @return Tag id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Setter for tag id
+     *
+     * @param id Tag id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Getter for tag name
+     *
+     * @return Tag name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Setter for tag name
+     *
+     * @param name Tag name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Equals implementation
+     *
+     * @param obj Object
+     * @return True if equals
+     */
     @Override
     public boolean equals(Object obj) {
         if(this == obj)
@@ -59,11 +88,20 @@ public class Tag extends MappedBean {
         return true;
     }
 
+    /**
+     * Hashcode implementation
+     *
+     * @return Int value
+     */
     @Override
     public int hashCode() {
         return (int)((id == null ? 0 : id) + (name == null ? 0: name.hashCode()));
     }
 
+    /**
+     * ToString implementation
+     * @return
+     */
     @Override
     public String toString() {
         return new StringBuilder()
@@ -75,10 +113,20 @@ public class Tag extends MappedBean {
                 .toString();
     }
 
+    /**
+     * Getter for news
+     *
+     * @return News set
+     */
     public Set<News> getNewses() {
         return newses;
     }
 
+    /**
+     * Setter for news
+     *
+     * @param newses News set
+     */
     public void setNewses(Set<News> newses) {
         this.newses = newses;
     }
