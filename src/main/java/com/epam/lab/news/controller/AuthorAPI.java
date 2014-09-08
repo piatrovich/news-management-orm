@@ -43,6 +43,11 @@ public class AuthorAPI {
         return service.checkExists(id);
     }
 
+    @RequestMapping(value = "/existsByName", method = RequestMethod.GET)
+    public Boolean existsByName(@RequestParam("name") String name){
+        return service.existsByName(name);
+    }
+
     @RequestMapping(value = "count", method = RequestMethod.GET)
     public Long count(){
         return service.getCount();

@@ -7,9 +7,6 @@ import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.bean.Page;
 import com.epam.lab.news.data.bean.ResponsePage;
 import com.epam.lab.news.data.repo.impl.NewsRepository;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Transactional(propagation = Propagation.REQUIRED)
@@ -40,6 +36,18 @@ public class NewsService {
         return repository.save(news);
     }
 
+    public MappedBean updateNews(News news){
+        News old = (News) repository.one(news.getId());
+        if (old != null){
+            old.setTitle(news.getTitle());
+            old.setShortText(news.getShortText());
+            old.setFullText(news.getFullText());
+            news.setModificationDate(new Date());
+            return repository.save(old);
+        }
+        return news;
+    }
+
     public Long getTotalNewsCount(){
         return repository.count();
     }
@@ -50,23 +58,13 @@ public class NewsService {
         if (page.getCurrent() > 0 && page.getCurrent() <= page.getTotal()) {
             newses = repository.page(page);
         }
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(page));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
         return new ResponsePage<MappedBean>(newses, page);
     }
 
-    @Transactional(readOnly = false)
     public void addTag(Long id, Tag tag){
         News news = (News) repository.one(id);
         if (news != null) {
-            Hibernate.initialize(news);
-            Hibernate.initialize(news.getTags().add(tag));
-
-            //news.getTags().add(tag);
+            news.getTags().add(tag);
         }
         repository.save(news);
     }

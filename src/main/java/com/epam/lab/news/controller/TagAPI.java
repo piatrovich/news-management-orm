@@ -48,6 +48,11 @@ public class TagAPI {
         return service.exists(id);
     }
 
+    @RequestMapping(value = "/existsByName", method = RequestMethod.GET)
+    public Boolean existsByName(@RequestParam("name") String name){
+        return service.existsByName(name);
+    }
+
     @RequestMapping(value = "/page", method = RequestMethod.GET)
     public ResponsePage<MappedBean> getPage(@RequestParam(value = "page") Long page,
                                      @RequestParam(value = "size") Long size){

@@ -43,6 +43,15 @@ public class NewsAPI {
         return result;
     }
 
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    public @ResponseBody ValidationResult update(@RequestBody News news){
+        ValidationResult result = validator.validate(news);
+        if (result.isStatus()){
+            service.updateNews(news);
+        }
+        return result;
+    }
+
     @RequestMapping(value = "/count", method = RequestMethod.GET)
     public Long newsCount(){
         return service.getTotalNewsCount();

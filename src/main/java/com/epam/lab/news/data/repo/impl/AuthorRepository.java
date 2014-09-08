@@ -4,6 +4,7 @@ import com.epam.lab.news.bean.MappedBean;
 import com.epam.lab.news.data.repo.impl.constants.RepositoryConstants;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -28,5 +29,12 @@ public class AuthorRepository extends BasePagingRepositoryImpl {
         } else {
             return super.all(params);
         }
+    }
+
+    public boolean existByName(String name){
+        Session session = sessionFactory.getCurrentSession();
+        List<MappedBean> entities = session.createCriteria(bean.getClass())
+                .add(Restrictions.eq("name", name)).list();
+        return entities.size() > 0;
     }
 }

@@ -41,13 +41,6 @@ public class BaseCRUDRepositoryImpl implements CRUDRepository<MappedBean> {
     public MappedBean save(MappedBean entity) {
         Session session = sessionFactory.getCurrentSession();
         session.saveOrUpdate(entity);
-        ObjectMapper mapper = new ObjectMapper();
-        try {
-            System.out.println("saving entity:");
-            System.out.println(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(entity));
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
         return entity;
     }
 

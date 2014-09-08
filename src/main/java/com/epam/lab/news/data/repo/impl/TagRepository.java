@@ -1,6 +1,7 @@
 package com.epam.lab.news.data.repo.impl;
 
 import com.epam.lab.news.bean.MappedBean;
+import com.epam.lab.news.bean.Tag;
 import com.epam.lab.news.data.repo.impl.constants.RepositoryConstants;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -30,6 +31,13 @@ public class TagRepository extends BasePagingRepositoryImpl {
         } else {
             return super.all(params);
         }
+    }
+
+    public boolean existByName(String name){
+        Session session = sessionFactory.getCurrentSession();
+        List<MappedBean> entities = session.createCriteria(bean.getClass())
+                .add(Restrictions.eq("name", name)).list();
+        return entities.size() > 0;
     }
 
 }

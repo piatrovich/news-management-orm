@@ -58,4 +58,8 @@ public class TagService {
         return repository.exists(id);
     }
 
+    public Boolean existsByName(String name){
+        return repository.existByName(name);
+    }
+
 }

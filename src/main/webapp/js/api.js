@@ -484,11 +484,11 @@ function editingArticle(){
         var article = new Object();
         article.id = getIDFromCurrentPageUrl();
         article.title = $(document).find("#inputTitle").val();
-        article.description = $(document).find("#inputShort").val();
-        article.text = $(document).find("#inputLong").val();
+        article.shortText = $(document).find("#inputShort").val();
+        article.fullText = $(document).find("#inputLong").val();
         $.ajax({
             type: "POST",
-            url: "http://localhost:8080/news-management-orm/api/update",
+            url: "http://localhost:8080/news-management-orm/api/news/update",
             contentType : 'application/json; charset=utf-8',
             data: JSON.stringify(article)
         }).done(function(data){
